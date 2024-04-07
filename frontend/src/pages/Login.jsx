@@ -18,8 +18,8 @@ const Login = () => {
             <div className='justify-center flex flex-col items-center w-full h-[90%] '>
             <div className='flex flex-col w-full px-10'>
                 <h1 className='text-white poppins-bold text-5xl py-5'>Login</h1>
-            <label htmlFor='username' className='text-white text-md poppins-regular'>Username</label>
-            <input id='username' className='p-3 my-2 bg-[#0A0A0A]  border-gray-700 border rounded-md lg:w-3/4 text-white' placeholder='Email'/>
+            <label htmlFor='email' className='text-white text-md poppins-regular'>Email</label>
+            <input id='email' className='p-3 my-2 bg-[#0A0A0A]  border-gray-700 border rounded-md lg:w-3/4 text-white' placeholder='Email'/>
             <label htmlFor='password' className='text-white text-md poppins-regular'>password</label>
             <input id='password' className='p-3 my-2 bg-[#0A0A0A] border-gray-700 border rounded-md lg:w-3/4 text-white' placeholder='Password'/>
             <p className='text-white text-left text-sm poppins-regular cursor-pointer'>Forgot password?</p>
