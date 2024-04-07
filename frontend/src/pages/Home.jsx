@@ -61,7 +61,7 @@ const Home = () => {
         <div className='lg:my-5'>
 
           <p className='text-primary poppins-medium text-center py-2 lg:py-5 text-md lg:text-xl'>Seamless Beat Creation, Limitless Possibilities</p>
-          <div className='bg-secondary p-8 lg:mx-10 mx-2 rounded-md flex lg:flex-row justify-between px-20'>
+          <div className='bg-secondary p-4 lg:p-8 lg:mx-10 mx-2 rounded-md flex lg:flex-row justify-between lg:px-20 gap-2'>
 
           {InstrumentData.map((item, index) => (
   <div key={item.id} className='flex flex-col justify-center items-center select-none'>
@@ -71,11 +71,11 @@ const Home = () => {
 ))}
 </div>
 
-          <div className='flex flex-col lg:flex-row bg-black-next justify-between pt-20 mt-10 items-center'>
+          <div className='flex flex-col lg:flex-row bg-black-next justify-between pt-1 lg:pt-20 mt-10 items-center'>
             <div className='flex flex-col lg:w-3/6 justify-center lg:pl-28'>
               <div className='hidden lg:block'>
               <h1 className='text-white flex gap-1 text-6xl poppins-bold pt-5 lg:pt-0'>Your <h1 className='text-primary'>Rhythm</h1>, Your <h1 className='text-primary'>Rules</h1></h1> </div>
-              <div className='lg:hidden flex flex-row pt-10 px-2'>
+              <div className='lg:hidden flex flex-col pt-10 px-2'>
                 <h1 className='text-white flex gap-1 text-3xl poppins-bold'>Your<h1 className='text-primary'>Rhythm</h1>,</h1>
                 <h1 className='text-white flex gap-1 text-3xl poppins-bold'>Your<h1 className='text-primary'>Rules</h1></h1>
               </div>
