@@ -2,32 +2,109 @@ import React, { useState, useRef } from 'react';
 import { Images } from '../constants'
 import { Link } from 'react-router-dom'
 import BannerCarousel from '../components/BannerCarousel'
+import {signup } from '../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
 
-  const [image, setImage] = useState(null);
-  const fileInputRef = useRef(null);
 
-  // Function to handle file selection
+  const fileInputRef = useRef(null);
+  const navigate = useNavigate();
+
+ 
+
+  const [profileImage, setImage] = useState(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isloading,setIsloading] = useState(false)
+
+
+
   const handleFileChange = (event) => {
     const selectedImage = event.target.files[0];
     if (selectedImage) {
-      // You might want to perform additional validation here
-      setImage(URL.createObjectURL(selectedImage));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(selectedImage);
     }
   };
+  
 
-  // Function to trigger file input when the profile add icon is clicked
   const handleAddIconClick = () => {
     fileInputRef.current.click();
   };
+
+  const handleSignup = async()=>{
+    console.log("Signup in progress..")
+    setIsloading(true)
+    try{
+
+      const response = await signup({
+        name: name,
+        email: email,
+        password: password,
+        profileImage: profileImage
+      });
+     
+    
+      console.log("signup response", response.user)
+      if(response.success){
+        setIsloading(false)
+        navigate('/login');
+        
+
+   
+        
+      }
+
+    }catch(err){
+      console.log(err)
+      setIsloading(false)
+    }
+
+  }
+
+  
+  const handleSubmit = (event) => {
+
+    if(!name){
+      alert( "Please enter name" )
+      return;
+    }
+    if(!email){
+      alert( "Please enter email" )
+      return;
+    }if(!password || password.length <5){
+      alert("Please enter a password with at least 5 characters");
+      return;
+    }
+   
+    handleSignup();
+  };
+
+  const handleTextChange = (event) => {
+    const { id, value } = event.target;
+    if (id === 'username') {
+      setName(value);
+    } else if (id === 'email') {
+      setEmail(value);
+    } else if (id === 'password') {
+      setPassword(value);
+    }
+  };
+  console.log("image", profileImage)
+
+  
   
   return (
 
-        <div className='lg:h-screen flex flex-row'>
+        <div className='lg:h-screen  flex flex-row bg-black'>
       
-        <div className='bg-black lg:w-2/5 items-center flex-col flex w-full  '>
-            <div className='flex flex-row items-center p-5 justify-start w-full h-[10%] cursor-pointer'>
+        <div className='bg-black h-screen lg:w-2/5 items-center flex-col flex w-full  '>
+            <div className='flex flex-row items-center p-5 justify-start w-full lg:h-[10%] cursor-pointer'>
                 <Link to='/' className='flex flex-row items-center gap-2'>
                 <img alt='logo' src={Images.LOGO}/>
                 <p className='text-white poppins-bold text-2xl'>ChordBeat</p>
@@ -35,21 +112,22 @@ const Signup = () => {
 
             </div>
 
-            <div className='justify-center flex flex-col items-center w-full h-[90%] '>
+            <div className='justify-center flex flex-col items-center w-full lg:h-[90%] '>
             <div className='flex flex-col w-full px-10'>
+           
                 <h1 className='text-white poppins-bold text-2xl lg:text-5xl py-5'>Create an account</h1>
                
                 <div className="">
-              {image && (
+              {profileImage && (
                 <img
-                  src={image}
+                  src={profileImage}
                   alt='Selected'
                   className='rounded-lg cursor-pointer w-[100px] lg:max-w-[150px] h-auto '
                  
-                  onClick={handleAddIconClick} // Allow clicking on the image to trigger file selection
+                  onClick={handleAddIconClick}
                 />
               )}
-              {!image && (<div>
+              {!profileImage && (<div>
                 <label htmlFor='profile' className='text-white text-md poppins-regular'>Profile picture</label>
                 <div 
                 id='profile'
@@ -71,18 +149,29 @@ const Signup = () => {
                 ref={fileInputRef}
               />
             </div>
+
             <label htmlFor='username' className='text-white text-md poppins-regular pt-2'>Username</label>
-            <input id='username' className='p-3 my-2 bg-[#0A0A0A]  border-gray-700 border rounded-md lg:w-3/4 text-white' autoComplete='name' placeholder='Name'/>
+            <input type='name' value={name} id='username' className='p-3 my-2 bg-[#0A0A0A]  border-gray-700 border rounded-md lg:w-3/4 text-white' autoComplete='name' placeholder='Name' onChange={handleTextChange}/>
 
             <label htmlFor='email' className='text-white text-md poppins-regular'>Email</label>
-            <input id='email' className='p-3 my-2 bg-[#0A0A0A]  border-gray-700 border rounded-md lg:w-3/4 text-white' placeholder='Email'/>
+            <input value={email} id='email' className='p-3 my-2 bg-[#0A0A0A]  border-gray-700 border rounded-md lg:w-3/4 text-white' placeholder='Email' onChange={handleTextChange}/>
 
             <label htmlFor='password' className='text-white text-md poppins-regular'>password</label>
-            <input id='password' className='p-3 my-2 bg-[#0A0A0A] border-gray-700 border rounded-md lg:w-3/4 text-white' placeholder='Password'/>
+            <input value={password} type='password' id='password' className='p-3 my-2 bg-[#0A0A0A] border-gray-700 border rounded-md lg:w-3/4 text-white' placeholder='Password' onChange={handleTextChange}/>
             
-            <button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md'>Signup</button>
+            {
+              isloading ? (<button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md items-center flex justify-center' ><img className='w-7' alt='load' src={Images.LOAD} /></button>
+
+             
+            ) : (<button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md items-center flex justify-center' onClick={()=> handleSubmit()}>Signup</button>
+            )
+            }
+            
+            
+            
+
             <div className='py-2 lg:w-3/4'>
-                <Link to='/signup'>  <p className='text-white text-center cursor-pointer '>Already have an account?</p></Link> 
+                <Link to='/login'>  <p className='text-white text-center cursor-pointer '>Already have an account?</p></Link> 
           
 
             </div>

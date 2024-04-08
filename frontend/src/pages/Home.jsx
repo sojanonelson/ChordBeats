@@ -74,10 +74,10 @@ const Home = () => {
           <div className='flex flex-col lg:flex-row bg-black-next justify-between pt-1 lg:pt-20 mt-10 items-center'>
             <div className='flex flex-col lg:w-3/6 justify-center lg:pl-28'>
               <div className='hidden lg:block'>
-              <h1 className='text-white flex gap-1 text-6xl poppins-bold pt-5 lg:pt-0'>Your <h1 className='text-primary'>Rhythm</h1>, Your <h1 className='text-primary'>Rules</h1></h1> </div>
+              <h1 className='text-white flex gap-1 text-6xl poppins-bold pt-5 lg:pt-0'>Your <p className='text-primary'>Rhythm</p>, Your <p className='text-primary'>Rules</p></h1> </div>
               <div className='lg:hidden flex flex-col pt-10 px-2'>
-                <h1 className='text-white flex gap-1 text-3xl poppins-bold'>Your<h1 className='text-primary'>Rhythm</h1>,</h1>
-                <h1 className='text-white flex gap-1 text-3xl poppins-bold'>Your<h1 className='text-primary'>Rules</h1></h1>
+                <h1 className='text-white flex gap-1 text-3xl poppins-bold'>Your<p className='text-primary'>Rhythm</p>,</h1>
+                <h1 className='text-white flex gap-1 text-3xl poppins-bold'>Your<p className='text-primary'>Rules</p></h1>
               </div>
               
               <p className='poppins-thin text-white py-1 px-2 '>Record, mix and collaborate on your music projects from start to finish with our best-in-class and 100% free Studio.</p>
@@ -106,11 +106,11 @@ const Home = () => {
 
           <div className='flex flex-col items-center lg:m-5 pt-10 lg:p-10 p-5 bg-black-next rounded-lg '>
             <div className='flex flex-row  items-center gap-2'>
-              <img src={Images.LOGO} className='lg:w-10 lg:h-10 w-5 h-5'  alt='logo'/>
-              <p className='poppins-bold lg:text-3xl text-lg text-primary'>ChordBeat Today</p>
+              <img src={Images.LOGO} className='lg:w-10 lg:h-10 w-5 h-5 animate-spin'  alt='logo'/>
+              <p className='poppins-bold lg:text-3xl text-xl text-primary'>ChordBeat Today</p>
 
             </div>
-            <div className='flex flex-col lg:flex-row gap-20 py-10'>
+            <div className='flex flex-col lg:flex-row gap-10 lg:gap-20 py-10'>
            
 
 {AlbumData.map((item, index) => (

@@ -7,6 +7,7 @@ const login= async(userData)=>{
 
         const response = await axios.post(ApiConstants.LOGIN, userData)
         console.log("Login response:", response.data)
+        return response.data
 
     }catch(err){
         console.log(err)
@@ -15,10 +16,12 @@ const login= async(userData)=>{
 
 }
 
-const register = async (userData)=>{
+const signup = async (userData)=>{
     try{
-        const response = await axios.post(ApiConstants.BACKEND_API.REGISTER, userData)
+        console.log("UserData from service:", userData)
+        const response = await axios.post(ApiConstants.REGISTER, userData)
         console.log("Register response:", response.data)
+        return response.data
     }catch(err){
         console.log(err)
         console.log("Register failed:", err)
@@ -27,4 +30,4 @@ const register = async (userData)=>{
 }
 
 
-export  {login,register}
+export   {login,signup}

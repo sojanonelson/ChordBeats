@@ -25,8 +25,18 @@ router.post("/register", async (req, res) => {
 
     await newUser.save()
 
+    const user = await User.findOne({email});
+
     res.status(201).send({
-      message: "User created successfully!"
+      message: "Account created successfully!",
+      user:{
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        profileImage: user.profileImage,
+        created: user.created
+    },
+    success: true
     });
 
   } catch (err) {
@@ -62,7 +72,8 @@ router.post('/login', async (req,res)=> {
                 profileImage: user.profileImage,
                 token: token,
                 created: user.created
-            }
+            },
+            success: true
         })
 
     }catch(err){

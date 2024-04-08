@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Analytics/>
+      {/* <Analytics/> */}
         <RootNavigator /> 
       </BrowserRouter>
     </div>

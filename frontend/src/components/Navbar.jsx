@@ -13,7 +13,7 @@ const Navbar = () => {
             <p className='text-white poppins-medium hidden lg:block'>whats new</p>
             <Link to="/login"><p className='text-white poppins-medium'>Login</p></Link>
             
-            <button className="px-4 py-1 text-black  bg-primary rounded poppins-bold">Signup</button>
+            <Link to='/signup'><button className="px-4 py-1 text-black  bg-primary rounded poppins-bold">Signup</button></Link>
         </div>
     </div>
   )

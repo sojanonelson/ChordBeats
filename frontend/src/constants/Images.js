@@ -3,12 +3,13 @@ const Images ={
     LOGO: require('../images/logo.png'),
     BANNER0: require("../images/banner0.png"),
     BANNER1: require("../images/banner1.png"),
-    BANNER2: require("../images/banner2.png"),
-    BANNER3: require("../images/banner3.jpg"),
-    BANNER4: require("../images/banner4.jpg"),
+    CAROUSEL1: require("../images/carousel1.jpg"),
+    CAROUSEL2: require("../images/carousel2.jpg"),
+    CAROUSEL3: require("../images/carousel3.jpg"),
     FACEBOOK: require("../images/facebook.svg"),
     INSTAGRAM: require("../images/instagram.svg"),
     TWITTER: require("../images/twitter.svg"),
+    LOAD: require("../images/load.gif")
     
     
 

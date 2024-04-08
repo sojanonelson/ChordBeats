@@ -5,6 +5,10 @@ const routes = require('./routes')
 const cors = require('cors')
 const setupDB = require("./utils/db")
 
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json({ limit: '10mb' })); 
+
 setupDB()
 app.use(cors())
 app.use(express.json())

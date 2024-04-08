@@ -1,8 +1,63 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Images } from '../constants'
 import { Link } from 'react-router-dom'
 import BannerCarousel from '../components/BannerCarousel'
+import { login } from '../services/authService'
+
+import {useNavigate} from "react-router-dom"
+
 const Login = () => {
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+    const navigate=useNavigate()
+    const [isloading,setIsloading] = useState(false)
+
+    const handleTextChange = (event)=>{
+        const{ id, value } = event.target;
+       if(id === "email") {
+        setEmail(value)  }
+        if(id === "password"){
+            setPassword(value)
+
+        }
+        
+    }
+
+    const handleSubmit =()=>{
+        if(!email){
+            alert("Please enter emailid")
+        }
+        if(!password){
+            alert("Please enter password")
+        }
+
+        handleLogin()
+    }
+
+   const handleLogin= async() =>{
+    setIsloading(true)
+    try{
+
+        const response = await login({email: email, password: password})
+        console.log("Login response from UI:", response)
+        if(response.success){
+            setIsloading(false)
+            navigate('/')
+        }
+
+    }catch(err){
+        console.log(err)
+        console.log('Login failed')
+        setIsloading(false)
+    }
+
+
+
+    }
+
+
+    console.log("email:", email)
+    console.log("password:", password)
   return (
         <div className='h-screen flex flex-row'>
       
@@ -19,11 +74,17 @@ const Login = () => {
             <div className='flex flex-col w-full px-10'>
                 <h1 className='text-white poppins-bold text-5xl py-5'>Login</h1>
             <label htmlFor='email' className='text-white text-md poppins-regular'>Email</label>
-            <input id='email' className='p-3 my-2 bg-[#0A0A0A]  border-gray-700 border rounded-md lg:w-3/4 text-white' placeholder='Email'/>
+            <input value={email} type='mail' id='email' className='p-3 my-2 bg-[#0A0A0A]  border-gray-700 border rounded-md lg:w-3/4 text-white' onChange={handleTextChange} placeholder='Email '/>
             <label htmlFor='password' className='text-white text-md poppins-regular'>password</label>
-            <input id='password' className='p-3 my-2 bg-[#0A0A0A] border-gray-700 border rounded-md lg:w-3/4 text-white' placeholder='Password'/>
+            <input value={password} type='password' id='password' className='p-3 my-2 bg-[#0A0A0A] border-gray-700 border rounded-md lg:w-3/4 text-white' onChange={handleTextChange} placeholder='Password'/>
             <p className='text-white text-left text-sm poppins-regular cursor-pointer'>Forgot password?</p>
-            <button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md'>Login</button>
+            {
+              isloading ? (<button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md items-center flex justify-center' ><img  alt='load'  className='w-7' src={Images.LOAD} /></button>
+
+             
+            ) : (<button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md items-center flex justify-center' onClick={()=> handleSubmit()}>Signup</button>
+            )
+            }
             <div className='py-2 lg:w-3/4'>
                 <Link to='/signup'>  <p className='text-white text-center cursor-pointer '>Create an account</p></Link> 
           
