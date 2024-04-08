@@ -3,14 +3,18 @@ import { Images } from '../constants'
 import { Link } from 'react-router-dom'
 import BannerCarousel from '../components/BannerCarousel'
 import { login } from '../services/authService'
-
 import {useNavigate} from "react-router-dom"
+import StorageService from '../services/StorageService'
+import  { setUser } from '../redux/reducers/userSlice'
+import {useDispatch, useSelector } from "react-redux"
 
 const Login = () => {
+    const dispatch = useDispatch()
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const navigate=useNavigate()
     const [isloading,setIsloading] = useState(false)
+    const  userData = useSelector((state)=> state.user.user)
 
     const handleTextChange = (event)=>{
         const{ id, value } = event.target;
@@ -43,6 +47,9 @@ const Login = () => {
         if(response.success){
             setIsloading(false)
             navigate('/')
+            dispatch(setUser(response.user))
+            StorageService.saveUserID(response.user._id)
+            StorageService.saveToken(response.user.token)
         }
 
     }catch(err){
@@ -58,6 +65,7 @@ const Login = () => {
 
     console.log("email:", email)
     console.log("password:", password)
+    console.log("userData from redux", userData)
   return (
         <div className='h-screen flex flex-row'>
       
@@ -82,7 +90,7 @@ const Login = () => {
               isloading ? (<button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md items-center flex justify-center' ><img  alt='load'  className='w-7' src={Images.LOAD} /></button>
 
              
-            ) : (<button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md items-center flex justify-center' onClick={()=> handleSubmit()}>Signup</button>
+            ) : (<button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md items-center flex justify-center' onClick={()=> handleSubmit()}>Login</button>
             )
             }
             <div className='py-2 lg:w-3/4'>

@@ -19,4 +19,6 @@ const fetchData = async (instrumentName) => {
 
 
 
+
+
 export  {fetchData}

@@ -69,6 +69,11 @@ const Signup = () => {
 
   
   const handleSubmit = (event) => {
+    if(!profileImage){
+      alert("Please provide a profile picture");
+      return;
+    
+    }
 
     if(!name){
       alert( "Please enter name" )
@@ -81,6 +86,7 @@ const Signup = () => {
       alert("Please enter a password with at least 5 characters");
       return;
     }
+    
    
     handleSignup();
   };
