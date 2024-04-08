@@ -1,9 +1,8 @@
 const BACKEND_API = {
-  BASE_API_URL: process.env.REACT_APP_BASE_URL,
+  BASE_API_URL: "http://localhost:4000/api",
   INSTRUMENT_SOUND: "http://localhost:4000/api/instrument",
-  LOGIN:'/user/login',
-  REGISTER:'/user/register',
-  USER_DATA:'/user?_id='
+  LOGIN:'http://localhost:4000/api/user/login',
+  REGISTER:'http://localhost:4000/api/user/register'
 };
 
 export default BACKEND_API;
