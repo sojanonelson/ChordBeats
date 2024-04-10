@@ -84,15 +84,15 @@ router.post("/login", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const { _id } = req.query; 
+    const { id } = req.query; // Accessing query parameters instead of body
     
-    console.log("user ID:", _id);
+    // console.log("user ID:", id);
 
-    if (!_id) {
+    if (!id) {
       return res.status(400).json({ message: "User ID is required" });
     }
 
-    const user = await User.findById(_id);
+    const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -115,5 +115,67 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+
+router.post("/update", async (req, res) => {
+  try {
+    const { _id, name, email, profileImage } = req.body;
+
+    // Check if user exists
+    const user = await User.findById(_id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user details
+    user.name = name;
+    user.email = email;
+    user.profileImage = profileImage;
+
+    // Save updated user details
+    await user.save();
+
+    res.status(200).json({
+      message: "Profile details updated successfully!",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        profileImage: user.profileImage,
+        created: user.created,
+      },
+      success: true,
+    });
+  } catch (err) {
+    console.error("Error updating profile details:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.delete("/delete", async (req, res) => {
+  try {
+    const { _id } = req.body;
+
+    // Check if user exists
+    const user = await User.findById(_id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Delete user account
+    await User.findByIdAndDelete(_id);
+
+    res.status(200).json({
+      message: "User account deleted successfully!",
+      success: true,
+    });
+  } catch (err) {
+    console.error("Error deleting user account:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 module.exports = router;

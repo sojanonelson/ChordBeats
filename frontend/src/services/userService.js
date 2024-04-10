@@ -6,19 +6,15 @@ const axiosInstance = axios.create({
 });
 
 const fetchUserData = async (userId) => {
-    console.log("ID:", userId)
+  console.log("ID:", userId);
   try {
-    const response = await axiosInstance.get("/user",{
-        params: {
-            _id: userId
-          }
-        
-    });
+    const response = await axiosInstance.get("/user", { params: { id: userId } });
     console.log("fetchUserData", response.data);
     return response.data;
   } catch (err) {
     console.log(err);
   }
 };
+
 
 export { fetchUserData };

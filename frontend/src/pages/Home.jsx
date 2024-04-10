@@ -49,7 +49,7 @@ const Home = () => {
     <div className='flex flex-col bg-black '>
         <Navbar/>
         <div className='h-[65vh]' style={{backgroundImage: `url(${Images.BANNER0}) ` , backgroundSize: 'cover'}}>
-            <div className='flex flex-col items-right justify-center p-10 gap-2 lg:mt-16   h-full'>
+            <div className='flex flex-col items-right justify-center px-5 lg:p-10 gap-2 lg:mt-16   h-full'>
 
            
             <h1 className='text-white poppins-bold text-6xl select-none'>Your Digital Beat Studio</h1>
