@@ -63,7 +63,7 @@ const Home = () => {
         </div>
         <div className='lg:my-5'>
 
-          <p className='text-primary poppins-medium text-center py-2 lg:py-5 text-md lg:text-xl'>Seamless Beat Creation, Limitless Possibilities</p>
+          <p className='text-primary poppins-medium text-center py-2 lg:py-5 text-md lg:text-xl'>Seamless Beat Creation, Limitless Possibilities.</p>
           <div className='bg-secondary p-4 lg:p-8 lg:mx-10 mx-2 rounded-md flex lg:flex-row justify-between lg:px-20 gap-2'>
 
           {InstrumentData.map((item, index) => (
