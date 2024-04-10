@@ -7,12 +7,13 @@ import StorageService from "./services/StorageService";
 import { setUser } from "./redux/reducers/userSlice";
 import { fetchUserData } from "./services/userService";
 import {useDispatch, useSelector } from "react-redux"
-import { setAppLoading } from "./redux/reducers/generalSlice";
+import { setAppLoading, setUserLoggedIn } from "./redux/reducers/generalSlice";
 
 function App() {
   const dispatch = useDispatch();
   const AppLoading = useSelector((state) => state.general.appLoading);
   console.log("AppLoading", AppLoading)
+  console.log("UserLoggedIn", useSelector((state) => state.general.userLoggedIn))
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,9 +23,12 @@ function App() {
       console.log("from local:", userId);
       
       if (userId && token) {
+      
         try {
+         
           const userData = await fetchUserData(userId);
           console.log("User", userData);
+          dispatch(setUserLoggedIn(true))
           dispatch(setUser(userData.user));
           dispatch(setAppLoading(false))
         } catch (error) {

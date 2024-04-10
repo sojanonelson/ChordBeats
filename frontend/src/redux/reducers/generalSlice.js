@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   appLoading: false,
+  userLoggedIn:false
 };
 
 const generalSlice = createSlice({
@@ -13,10 +14,13 @@ const generalSlice = createSlice({
       
      
     },
+    setUserLoggedIn:(state,action)=>{
+      state.userLoggedIn=action.payload;
+    }
     
   }
 });
 
-export const { setAppLoading } = generalSlice.actions;
+export const { setAppLoading,setUserLoggedIn } = generalSlice.actions;
 
 export default generalSlice.reducer;

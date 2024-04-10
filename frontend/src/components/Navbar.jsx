@@ -1,15 +1,35 @@
 import React, { useState } from 'react';
 import { Images } from '../constants';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import StorageService from '../services/StorageService';
+import {useNavigate} from "react-router-dom"
+import {logout} from "../redux/reducers/userSlice"
 const Navbar = () => {
+  const navigate = useNavigate()
+const dispatch = useDispatch()
   const user = useSelector((state) => state.user.user);
   const [isOpen, setIsOpen] = useState(false);
+  const userLogged = useSelector((state)=> state.general.userLoggedIn)
+  
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  const userLogout = async()=>{
+    try{
+      dispatch(logout())
+      StorageService.removeToken()
+      StorageService.removeUserID()
+     
+      
+      navigate('/')
+
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <div className='bg-black flex flex-row w-full py-2 px-2 items-center'>
@@ -43,7 +63,16 @@ const Navbar = () => {
                 <Link to='/profile' className='block'>Profile</Link>
                 <Link to='/dashboard' className='block py-2'>Dashboard</Link>
                 <Link to='/settings' className='block'>Settings</Link>
+                {
+                  userLogged && (
+                    <button className=' bg-red-500 w-full my-2 p-1 text-red-100 rounded-sm' onClick={userLogout} >
+                      Logout
+                    </button>
+                  )
+                }
+              
               </div>
+              
             )}
           </>
         )}

@@ -18,7 +18,10 @@ const StorageService ={
     },
     removeToken:()=>{
          localStorage.removeItem('token')
-    }
+    },
+    removeUserID:()=>{
+        localStorage.removeItem('userid')
+   }
 }
 
 export default StorageService;

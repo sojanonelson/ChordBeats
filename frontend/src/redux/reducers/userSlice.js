@@ -22,10 +22,14 @@ const userSlice = createSlice({
     },
     setToken:(state,action)=>{
       state.token=action.payload
+    },
+    logout:(state,action)=>{
+      state.user=''
+      state.token=null
     }
   }
 });
 
-export const { setUser, setError,setToken } = userSlice.actions;
+export const { setUser, setError,setToken,logout } = userSlice.actions;
 
 export default userSlice.reducer;

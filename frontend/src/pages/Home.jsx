@@ -3,9 +3,10 @@ import { AlbumData, Images,InstrumentData } from '../constants'
 import Navbar from '../components/Navbar'
 import HomeAlbumCard from '../components/HomeAlbumCard';
 import Footer from '../components/Footer';
-
+import {useSelector} from "react-redux"
+import {useNavigate} from "react-router-dom"
 const Home = () => {
-
+  const userLogged = useSelector((state)=> state.general.userLoggedIn)
   const [counters, setCounters] = useState({
     instruments: 50,
     soundEffects: 0,
@@ -13,6 +14,7 @@ const Home = () => {
   });
 
   const countingRef = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,6 +56,7 @@ const Home = () => {
            
             <h1 className='text-white poppins-bold text-6xl select-none'>Your Digital Beat Studio</h1>
             <p className='text-white poppins-thin text-2xl'>Where Creativity Strikes a Perfect Harmony for free</p>
+            
             <button className="px-4 py-1 w-32 text-black hover:bg-black hover:text-primary transition duration-300 ease-in-out bg-primary rounded poppins-bold">Get Started</button>
             </div> 
 
