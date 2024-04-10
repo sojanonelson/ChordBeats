@@ -1,6 +1,7 @@
 import React from 'react'
 import { Routes, Route } from'react-router-dom'
-import { Home, Login, Signup } from '../pages'
+import { Dashboard, Home, Login, Signup,Profile } from '../pages'
+
 const rootNavigator = () => {
   return (
 
@@ -9,6 +10,8 @@ const rootNavigator = () => {
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup/>} />
+        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/profile' element={<Profile/>}/>
 
     </Routes>
     

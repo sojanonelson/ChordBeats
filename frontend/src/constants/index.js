@@ -3,4 +3,5 @@ import Images from "./Images";
 import Colors from "./Colors";
 import InstrumentData from "./Instruments"
 import AlbumData from './ShowCaseAlbum'
-export {ApiConstants,Images,Colors,InstrumentData,AlbumData}
+import Sounds from "./sound"
+export {ApiConstants,Images,Colors,InstrumentData,AlbumData,Sounds}

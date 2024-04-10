@@ -7,29 +7,37 @@ import StorageService from "./services/StorageService";
 import { setUser } from "./redux/reducers/userSlice";
 import { fetchUserData } from "./services/userService";
 import {useDispatch, useSelector } from "react-redux"
+import { setAppLoading } from "./redux/reducers/generalSlice";
 
 function App() {
   const dispatch = useDispatch();
+  const AppLoading = useSelector((state) => state.general.appLoading);
+  console.log("AppLoading", AppLoading)
 
   useEffect(() => {
     const fetchData = async () => {
+      dispatch(setAppLoading(true))
       const token = StorageService.gettoken();
       const userId = StorageService.getUserID();
-      console.log(userId);
+      console.log("from local:", userId);
       
       if (userId && token) {
         try {
-          const userData = await fetchUserData({ _id: userId });
-          console.log("User",userData)
+          const userData = await fetchUserData(userId);
+          console.log("User", userData);
           dispatch(setUser(userData.user));
+          dispatch(setAppLoading(false))
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
+      }else{
+        dispatch(setAppLoading(false))
+
       }
     };
-
+  
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="App">
