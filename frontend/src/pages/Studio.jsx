@@ -5,6 +5,8 @@ import { useSelector ,useDispatch} from "react-redux";
 import Loading from '../components/Loading';
 import { setActiveKey } from '../redux/reducers/generalSlice';
 import pianoSound from '../constants/Audio/piano';
+import WaveSurfer from 'wavesurfer.js';
+
 
 const Studio = () => {
   const dispatch = useDispatch()
@@ -52,6 +54,13 @@ const Studio = () => {
         };
     }, [pianoSound.whiteKeys, pianoSound.blackKeys]);
 
+    const handleKeyClick = (keyObj) => {
+        console.log(keyObj.keyName, keyObj.keyValue);
+        setActiveKeyNow(keyObj.keyName);
+        dispatch(setActiveKey(keyObj.keyName));
+        playAudio(keyObj.audio);
+    }
+
 
     return (
         <div className='bg-[#0A0A0A] h-screen flex flex-col'>
@@ -69,11 +78,14 @@ const Studio = () => {
                 <div className='text-white w-5/6 flex flex-col'>
                   < h1 className='text-8xl p-10 text-center poppins-regular'>{activeKey}</h1>
                     <div className='flex-grow'></div>
+                   <div className='w-full bg-[#080808] rounded-tr-lg rounded-tl-lg h-20 flex flex-row'>
+                    <p className='text-gray-200 poppins-bold p-2'>VIRTUAL INSTRUMENT</p>
+                   </div>
                     <div className='bg-gray-900 h-[300px] p-0 flex flex-row '>
                         {
                             pianoSound.whiteKeys.map((keyObj, index) => (
-                                <div onClick={()=>console.log(keyObj.note, keyObj. keyValue)} data-key={keyObj.keyValue} key={index} className='flex items-end justify-center w-full h-full rounded-br-lg rounded-bl-lg cursor-pointer border border-black mx-0 bg-white'>
-                                    <p className='text-black text-center poppins-bold text-lg'>{keyObj.keyName}</p>
+                                <div onClick={() => handleKeyClick(keyObj)}  data-key={keyObj.keyValue} key={index} className='flex items-end justify-center w-full h-full rounded-br-lg rounded-bl-lg cursor-pointer border border-black mx-0 bg-white'>
+                                    <p className='text-black select-none text-center poppins-bold text-lg'>{keyObj.keyName}</p>
                                 </div>
                             ))
                         }
@@ -81,8 +93,8 @@ const Studio = () => {
                     <div className='flex flex-row mx-10 absolute px-12 bottom-24 ml-0 w-5/6 h-[203px]'>
                         {
                             pianoSound.blackKeys.map((keyObj, index) => (
-                                <div onClick={()=>console.log(keyObj.note, keyObj. keyValue)} data-key={keyObj.keyValue} key={index} className={`flex items-end justify-center w-[90%] h-full rounded-br-lg rounded-bl-lg mx-4 cursor-pointer ${keyObj.keyName.length === 0 ? 'bg-transparent' : 'bg-black'}`}>
-                                    <p className='text-green text-center poppins-bold text-lg'>{keyObj.keyName}</p>
+                                <div onClick={() => handleKeyClick(keyObj)}  data-key={keyObj.keyValue} key={index} className={`flex items-end justify-center w-[90%] h-full rounded-br-lg rounded-bl-lg mx-4 cursor-pointer ${keyObj.keyName.length === 0 ? 'bg-transparent' : 'bg-black'}`}>
+                                    <p className=' select-none ctext-green text-center poppins-bold text-lg'>{keyObj.keyName}</p>
                                 </div>
                             ))
                         }
