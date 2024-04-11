@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import RootNavigator from "./routes/rootNavigator"; 
-
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import { useEffect } from "react";
 import StorageService from "./services/StorageService";
 import { setUser } from "./redux/reducers/userSlice";
