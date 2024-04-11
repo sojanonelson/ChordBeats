@@ -9,7 +9,10 @@ const Images ={
     FACEBOOK: require("../images/facebook.svg"),
     INSTAGRAM: require("../images/instagram.svg"),
     TWITTER: require("../images/twitter.svg"),
-    LOAD: require("../images/load.gif")
+    LOAD: require("../images/load.gif"),
+    DOT1: require("../images/dot.png"),
+    DOT2: require("../images/dot2.png"),
+    SPEAKER: require("../images/speaker.png")
     
     
 

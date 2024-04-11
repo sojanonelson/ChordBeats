@@ -4,6 +4,7 @@ import {useSelector} from "react-redux"
 import SoundCard from '../components/soundCard'
 import { Sounds } from '../constants'
 import AppLoad from "../components/Loading"
+import { Link } from 'react-router-dom'
 const Dashboard = () => {
 
     const userData = useSelector((state)=> state.user.user)
@@ -24,12 +25,15 @@ const Dashboard = () => {
                         <p className='text-white poppins-regular  text-sm text-center lg:text-lg   '>My projects</p>
                     </div>
                     <div className='flex flex-row items-center py-5 gap-2'>
-                       { userData.profileImage && <img className='w-10 rounded-full hidden lg:block ' src={userData.profileImage} alt='porifle'/>}
+                       { userData.profileImage && <img className='w-10 rounded-full hidden lg:block border-xl border border-purple-600 ' src={userData.profileImage} alt='porifle'/>}
                          
                         <p className='text-white poppins-regular  text-sm text-center lg:text-lg   '>Saved</p>
                     </div>
 
                 </div>
+                <Link className='w-full' to='/studio'><button className='bg-purple-800 m-2 lg:p-2 h-10 text-white text-sm poppins-bold lg:w-full animate-pulse rounded-sm'>Open Studio</button></Link>
+
+                
             </div>
             <div className='w-4/5 bg-[#0A0A0A] flex flex-col'>
                 <div className='flex flex-col m-5'>

@@ -12,7 +12,7 @@ const SoundCard = ({ name, image }) => {
   };
 
   return (
-    <div className="sound-card justify-center items-center flex flex-col transition-all " onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div className="sound-card justify-center items-center flex flex-col transition-all " onClick={()=>console.log(name)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <img className=" cursor-pointer" src={image} alt={name} />
       {hovered && (
         <div className="play-button-overlay px-0 justify-center items-center flex">
