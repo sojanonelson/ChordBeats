@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiConstants } from "../constants";
+
 
 const axiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
