@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useRef  } from 'react';
-import { AlbumData, Images,InstrumentData } from '../constants'
+import { AlbumData, DashboardData, Images,InstrumentData } from '../constants'
 import Navbar from '../components/Navbar'
 import HomeAlbumCard from '../components/HomeAlbumCard';
 import Footer from '../components/Footer';
@@ -66,7 +66,7 @@ const Home = () => {
           <p className='text-primary poppins-medium text-center py-2 lg:py-5 text-md lg:text-xl'>Seamless Beat Creation, Limitless Possibilities.</p>
           <div className='bg-secondary p-4 lg:p-8 lg:mx-10 mx-2 rounded-md flex lg:flex-row justify-between lg:px-20 gap-2'>
 
-          {InstrumentData.map((item, index) => (
+          {DashboardData.Instruments.map((item, index) => (
   <div key={item.id} className='flex flex-col justify-center items-center select-none'>
     <img src={item.image} alt='instrument' className='h-10 w-10 ' />
     <p className='text-white poppins-regular pt-2 hidden lg:block '>{item.name}</p>
