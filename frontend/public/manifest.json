@@ -1,0 +1,61 @@
+{
+    "name": "ChordBeat",
+    "short_name": "ChordBeat",
+    "description": "Create, save, and share beats effortlessly.",
+    "icons": [
+      {
+        "src": "/logo.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/logo.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#007bff",
+    "orientation": "portrait",
+    "scope": "/",
+    "lang": "en-US",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "dir": "ltr",
+    "categories": [],
+    "screenshots": [],
+    "iarc_rating_id": null
+  }
+{
+  "name": "ChordBeat",
+  "short_name": "ChordBeat",
+  "description": "Create, save, and share beats effortlessly.",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en-US",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "dir": "ltr",
+  "categories": [],
+  "screenshots": [],
+  "iarc_rating_id": null
+}
+  

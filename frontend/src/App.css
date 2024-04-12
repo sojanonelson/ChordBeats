@@ -7,6 +7,10 @@ body{
   padding: 0%;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .poppins-thin {
   font-family: "Poppins", sans-serif;
   font-weight: 100;
