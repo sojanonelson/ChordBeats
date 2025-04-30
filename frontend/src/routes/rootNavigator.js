@@ -13,6 +13,7 @@ const rootNavigator = () => {
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/studio' element={<Studio/>}/>
+        <Route path='/studio/:instrument' element={<Studio/>}/>
         <Route path='*' element={<Notfound/>}/>
 
     </Routes>

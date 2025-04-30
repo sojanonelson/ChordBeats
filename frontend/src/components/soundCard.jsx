@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Global audio context to manage all sounds
 let activeAudio = null;
@@ -6,9 +7,11 @@ let activeAudio = null;
 const SoundCard = ({ name, image, audio }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+    const [hasInteracted, setHasInteracted] = useState(false);
     const audioRef = useRef(null);
     const timerRef = useRef(null);
     const menuRef = useRef(null);
+    const navigate = useNavigate();
 
     // Clean up function to stop audio and clear timers
     const stopSound = () => {
@@ -22,13 +25,9 @@ const SoundCard = ({ name, image, audio }) => {
         setIsPlaying(false);
     };
 
-    // Handle card click to play/stop sound
-    const handlePlay = () => {
-        // If this sound is already playing, stop it
-        if (isPlaying) {
-            stopSound();
-            return;
-        }
+    // Handle card hover to play sound
+    const handleMouseEnter = () => {
+        if (!hasInteracted) return;
 
         // Stop any currently playing sound
         if (activeAudio) {
@@ -39,17 +38,28 @@ const SoundCard = ({ name, image, audio }) => {
         const sound = new Audio(audio);
         audioRef.current = sound;
         sound.play();
-        
+
         // Set this as the active audio globally
         activeAudio = { stopSound };
-        
+
         // Update state
         setIsPlaying(true);
-        
+
         // Set timeout to stop after 10 seconds
         timerRef.current = setTimeout(() => {
             stopSound();
         }, 10000);
+    };
+
+    // Handle card mouse leave to stop sound
+    const handleMouseLeave = () => {
+        stopSound();
+    };
+
+    // Handle card click to navigate to /studio/piano
+    const handleClick = () => {
+        setHasInteracted(true);
+        navigate('/studio/piano');
     };
 
     // Toggle menu visibility
@@ -65,7 +75,7 @@ const SoundCard = ({ name, image, audio }) => {
         // For example, save to localStorage or Redux
         localStorage.setItem('selectedInstrument', JSON.stringify({ name, audio, image }));
         setShowMenu(false);
-        
+
         // Show a toast or notification
         alert(`${name} selected as your instrument!`);
     };
@@ -74,7 +84,7 @@ const SoundCard = ({ name, image, audio }) => {
     const handleSendFeedback = (e) => {
         e.stopPropagation(); // Prevent triggering the card's onClick
         setShowMenu(false);
-        
+
         // You can implement a feedback modal or form here
         const feedback = prompt(`Please enter your feedback for ${name}:`);
         if (feedback) {
@@ -108,20 +118,39 @@ const SoundCard = ({ name, image, audio }) => {
         };
     }, []);
 
+    // Set hasInteracted to true on first user interaction
+    useEffect(() => {
+        const handleFirstInteraction = () => {
+            setHasInteracted(true);
+            document.removeEventListener('click', handleFirstInteraction);
+            document.removeEventListener('keydown', handleFirstInteraction);
+        };
+
+        document.addEventListener('click', handleFirstInteraction);
+        document.addEventListener('keydown', handleFirstInteraction);
+
+        return () => {
+            document.removeEventListener('click', handleFirstInteraction);
+            document.removeEventListener('keydown', handleFirstInteraction);
+        };
+    }, []);
+
     return (
         <div className="relative">
-            <div 
+            <div
                 className={`flex flex-col items-center justify-center p-4 rounded-lg cursor-pointer transition-all duration-300 ${isPlaying ? 'bg-purple-800' : 'bg-gray-900'} hover:bg-gray-700`}
-                onClick={handlePlay}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onClick={handleClick}
             >
                 <div className="w-full h-36 overflow-hidden rounded-md mb-2 relative">
-                    <img 
-                        src={image} 
-                        alt={name} 
+                    <img
+                        src={image}
+                        alt={name}
                         className="w-full h-full object-cover"
                     />
                     {/* 3-dot menu icon */}
-                    <div 
+                    <div
                         className="absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-60 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-80"
                         onClick={toggleMenu}
                     >
@@ -138,18 +167,18 @@ const SoundCard = ({ name, image, audio }) => {
 
             {/* Dropdown Menu */}
             {showMenu && (
-                <div 
+                <div
                     ref={menuRef}
                     className="absolute top-12 right-2 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-50 w-48"
                 >
                     <ul>
-                        <li 
+                        <li
                             className="px-4 py-2 hover:bg-purple-700 text-white cursor-pointer border-b border-gray-700"
                             onClick={handleUseInstrument}
                         >
                             Use this instrument
                         </li>
-                        <li 
+                        <li
                             className="px-4 py-2 hover:bg-purple-700 text-white cursor-pointer"
                             onClick={handleSendFeedback}
                         >

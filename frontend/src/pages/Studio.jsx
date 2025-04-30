@@ -10,9 +10,11 @@ import violinSound from '../constants/Audio/guitar'; // Fixed: Changed from guit
 import WhiteKey from '../components/whiteKey'; // Import WhiteKey
 import BlackKey from '../components/blackKey';
 import FileUploadComponent from '../components/FileUploadComponent';
+import { useParams } from 'react-router-dom';
 
 const Studio = () => {
     const dispatch = useDispatch();
+    const { instrument } = useParams(); 
     const appLoad = useSelector((state) => state.general.appLoading);
     const activeKey = useSelector((state) => state.general.activeKey);
     const [activeKeyNow, setActiveKeyNow] = useState('press any key');
@@ -33,6 +35,17 @@ const Studio = () => {
 
     // Audio context for pitch control
     const audioContextRef = useRef(null);
+
+    useEffect(() => {
+        if (instrument) {
+            // Capitalize first letter and set the instrument
+            const formattedInstrument = instrument.charAt(0).toUpperCase() + instrument.slice(1).toLowerCase();
+            if (['Piano', 'Guitar', 'Violin'].includes(formattedInstrument)) {
+                setSelectedInstrument(formattedInstrument);
+            }
+        }
+    }, [instrument]);
+
     
     useEffect(() => {
         // Initialize audio context

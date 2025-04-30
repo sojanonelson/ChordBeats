@@ -19,12 +19,12 @@ const Dashboard = () => {
             ) : (
                 <div className='flex flex-row justify-between'>
                     <div className='w-1/5 bg-[#1A1A1A] h-[94vh] items-center flex flex-col lg:p-5 '>
-                        <button className='bg-primary m-2 lg:p-2 text-black text-sm poppins-bold lg:w-full rounded-md'>New Record</button>
+                        {/* <button className='bg-primary m-2 lg:p-2 text-black text-sm poppins-bold lg:w-full rounded-md'>New Record</button> */}
                         <div className='flex flex-col items-center'>
-                            <div className='flex flex-row items-center py-5 gap-2'>
+                            {/* <div className='flex flex-row items-center py-5 gap-2'>
                                 {userData.profileImage && <img className='w-10 rounded-full hidden lg:block ' src={userData.profileImage} alt='profile' />}
                                 <p className='text-white poppins-regular  text-sm text-center lg:text-lg'>My Recordings</p>
-                            </div>
+                            </div> */}
                             {/* <div className='flex flex-row items-center py-5 gap-2'>
                                 {userData.profileImage && <img className='w-10 rounded-full hidden lg:block border-xl border border-purple-600 ' src={userData.profileImage} alt='profile' />}
                                 <p className='text-white poppins-regular  text-sm text-center lg:text-lg'>Saved</p>
