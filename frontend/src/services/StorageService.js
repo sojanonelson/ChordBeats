@@ -4,6 +4,11 @@ const StorageService ={
         
 
     },
+    saveUser: (userdata)=>{
+        localStorage.setItem('user',userdata)
+        
+
+    },
     saveUserID: (userid)=>{
         localStorage.setItem('userid',userid)
         

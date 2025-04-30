@@ -19,16 +19,16 @@ const Dashboard = () => {
             ) : (
                 <div className='flex flex-row justify-between'>
                     <div className='w-1/5 bg-[#1A1A1A] h-[94vh] items-center flex flex-col lg:p-5 '>
-                        <button className='bg-primary m-2 lg:p-2 text-black text-sm poppins-bold lg:w-full rounded-md'>New project</button>
-                        <div className='flex flex-col'>
+                        <button className='bg-primary m-2 lg:p-2 text-black text-sm poppins-bold lg:w-full rounded-md'>New Record</button>
+                        <div className='flex flex-col items-center'>
                             <div className='flex flex-row items-center py-5 gap-2'>
                                 {userData.profileImage && <img className='w-10 rounded-full hidden lg:block ' src={userData.profileImage} alt='profile' />}
-                                <p className='text-white poppins-regular  text-sm text-center lg:text-lg'>My projects</p>
+                                <p className='text-white poppins-regular  text-sm text-center lg:text-lg'>My Recordings</p>
                             </div>
-                            <div className='flex flex-row items-center py-5 gap-2'>
+                            {/* <div className='flex flex-row items-center py-5 gap-2'>
                                 {userData.profileImage && <img className='w-10 rounded-full hidden lg:block border-xl border border-purple-600 ' src={userData.profileImage} alt='profile' />}
                                 <p className='text-white poppins-regular  text-sm text-center lg:text-lg'>Saved</p>
-                            </div>
+                            </div> */}
                         </div>
                         <Link className='w-full' to='/studio'>
                             <button className='bg-purple-800 m-2 lg:p-2 h-10 text-white text-sm poppins-bold lg:w-full animate-pulse rounded-sm'>Open Studio</button>
@@ -46,19 +46,6 @@ const Dashboard = () => {
                                     <SoundCard key={index} name={sound.name} image={sound.image} audio={sound.audio} />
                                 ))}
                             </div>
-
-                        </div>
-
-                       <div className='flex flex-col  justify-between m-5 '>
-                        <div> <p className='text-white poppins-bold text-2xl py-5'>Tools</p></div>
-                        <div className=' flex-row justify-between   grid grid-cols-2 md:grid-cols-4 '>
-
-                        {
-                            DashboardData.Tools.map((tool, index)=>(
-                                <Tools index={index} key={index} name={tool.name} image={tool.image} descrption={tool.description} />
-                            ))
-                        }
-                        </div>
 
                         </div>
                         

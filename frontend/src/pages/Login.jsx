@@ -46,6 +46,7 @@ const Login = () => {
         console.log("Login response from UI:", response)
         if(response.success){
             setIsloading(false)
+            
             navigate('/')
             dispatch(setUser(response.user))
             StorageService.saveUserID(response.user._id)

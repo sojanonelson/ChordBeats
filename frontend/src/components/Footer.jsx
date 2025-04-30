@@ -17,9 +17,7 @@ const Footer = () => {
            
 
         </div>
-        <div className='items-center'>
-                <p className='text-white poppins-thin text-md'>All right reserverd @2024</p>
-            </div>
+        
         </div>
         <div className='Second flex flex-col '>
             <p className='poppins-regular text-white'>SUBSCRIBE TO CHORDBEAT</p>
@@ -31,7 +29,7 @@ const Footer = () => {
             </button>
             </div>
             <div className='flex flex-row items-center gap-6 p-2'> 
-            <a href='https://www.instagram.com/sojxnn'><p className='text-white'>Made with  &hearts; by sojan</p></a>
+
             
 
             

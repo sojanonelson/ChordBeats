@@ -118,3 +118,31 @@ body{
   font-weight: 900;
   font-style: italic;
 }
+
+
+@keyframes fadeOut {
+  0% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+  }
+}
+
+.fade-text {
+  opacity: 1;
+  animation: fadeOut 2s ease-out forwards;
+}
+
+
+.comic-relief-regular {
+  font-family: "Comic Relief", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.comic-relief-bold {
+  font-family: "Comic Relief", system-ui;
+  font-weight: 700;
+  font-style: normal;
+}

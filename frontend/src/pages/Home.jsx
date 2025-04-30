@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar'
 import HomeAlbumCard from '../components/HomeAlbumCard';
 import Footer from '../components/Footer';
 import {useSelector} from "react-redux"
-import {useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 const Home = () => {
   const userLogged = useSelector((state)=> state.general.userLoggedIn)
   const [counters, setCounters] = useState({
@@ -99,7 +99,8 @@ const Home = () => {
           <p className='text-primary'>Musicians loved</p>
         </div>
               </div>
-              <button className="px-4 py-2 my-10 w-1/4 font-semibold text-white bg-primary hover:bg-white hover:border-primary hover:text-primary border-black  border-2 rounded-md hover mx-4 transition">Explore</button>
+              <Link to='/dashboard'> <button className="px-4 py-2 my-10 w-1/4 font-semibold text-white bg-primary hover:bg-white hover:border-primary hover:text-primary border-black  border-2 rounded-md hover mx-4 transition">Explore</button></Link>
+             
             </div>
             <div className='items-center justify-center flex'>
               <img className='lg:w-3/4 ' alt='banner2' src={Images.BANNER1}/>
