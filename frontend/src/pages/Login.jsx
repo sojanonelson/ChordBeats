@@ -27,16 +27,28 @@ const Login = () => {
         
     }
 
-    const handleSubmit =()=>{
-        if(!email){
-            alert("Please enter emailid")
-        }
-        if(!password){
-            alert("Please enter password")
-        }
-
-        handleLogin()
+const handleSubmit = () => {
+    if (!email) {
+        alert("Please enter email id");
+        return; // Exit the function if email is not provided
     }
+
+    if (!password) {
+        alert("Please enter password");
+        return; // Exit the function if password is not provided
+    }
+
+    // Regular expression for password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/;
+
+    if (!passwordRegex.test(password)) {
+        alert("Password must be at least 6 characters long and include at least one special character, one uppercase letter, and one lowercase letter.");
+        return; // Exit the function if password validation fails
+    }
+
+    handleLogin();
+};
+
 
    const handleLogin= async() =>{
     setIsloading(true)
