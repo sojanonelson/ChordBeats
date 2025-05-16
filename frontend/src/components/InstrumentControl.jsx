@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Images } from '../constants';
 
-const InstrumentControl = ({ onInstrumentSelect }) => {
-  const [selectedInstrument, setSelectedInstrument] = useState('Piano');
+const InstrumentControl = ({ onInstrumentSelect , Instrument}) => {
+  const [selectedInstrument, setSelectedInstrument] = useState(Instrument );
+  console.log("Instrumenttt", Instrument)
 
   const handleInstrumentSelect = (event) => {
     const instrument = event.target.value;
@@ -20,9 +21,9 @@ const InstrumentControl = ({ onInstrumentSelect }) => {
             onChange={handleInstrumentSelect}
             className='text-white poppins-medium text-sm bg-gray-800 rounded px-2 py-1'
           >
-            <option value='Guitar'>Guitar</option>
-            <option value='Piano'>Piano</option>
-            <option value='Violin'>Violin</option>
+            <option value='guitar'>Guitar</option>
+            <option value='piano'>Piano</option>
+            <option value='drum'>Drum</option>
           </select>
         </div>
 

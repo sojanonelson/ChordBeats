@@ -11,7 +11,7 @@ const dispatch = useDispatch()
   const user = useSelector((state) => state.user.user);
   const [isOpen, setIsOpen] = useState(false);
   const userLogged = useSelector((state)=> state.general.userLoggedIn)
-  console.log("User", userLogged)
+  // console.log("User", userLogged)
   
 
   const toggleDropdown = () => {
