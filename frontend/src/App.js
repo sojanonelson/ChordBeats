@@ -20,14 +20,14 @@ function App() {
       dispatch(setAppLoading(true))
       const token = StorageService.gettoken();
       const userId = StorageService.getUserID();
-      console.log("from local:", userId);
+      // console.log("from local:", userId);
       
       if (userId && token) {
       
         try {
          
           const userData = await fetchUserData(userId);
-          console.log("User", userData);
+          // console.log("User", userData);
           dispatch(setUserLoggedIn(true))
           dispatch(setUser(userData.user));
           dispatch(setAppLoading(false))

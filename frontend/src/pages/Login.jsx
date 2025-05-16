@@ -53,6 +53,7 @@ const handleSubmit = () => {
    const handleLogin= async() =>{
     setIsloading(true)
     try{
+        localStorage.clear()
 
         const response = await login({email: email, password: password})
         console.log("Login response from UI:", response)

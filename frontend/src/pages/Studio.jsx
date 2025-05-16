@@ -6,6 +6,7 @@ import Loading from '../components/Loading';
 import { setActiveKey } from '../redux/reducers/generalSlice';
 import pianoSound from '../constants/Audio/piano';
 import guitarSound from '../constants/Audio/guitar';
+import drumSound from '../constants/Audio/drum';
 import violinSound from '../constants/Audio/guitar'; // Fixed: Changed from guitar to violin
 import WhiteKey from '../components/whiteKey'; // Import WhiteKey
 import BlackKey from '../components/blackKey';
@@ -22,7 +23,7 @@ const Studio = () => {
     const [keyPressLog, setKeyPressLog] = useState([]);
     const [playbackLog, setPlaybackLog] = useState(null);
     const [isSoundPlaying, setIsSoundPlaying] = useState(false);
-    const [selectedInstrument, setSelectedInstrument] = useState('Piano');
+    const [selectedInstrument, setSelectedInstrument] = useState('');
 
     const startTimeRef = useRef(null);
     
@@ -36,16 +37,25 @@ const Studio = () => {
     // Audio context for pitch control
     const audioContextRef = useRef(null);
 
-    useEffect(() => {
-        if (instrument) {
-            // Capitalize first letter and set the instrument
-            const formattedInstrument = instrument.charAt(0).toUpperCase() + instrument.slice(1).toLowerCase();
-            if (['Piano', 'Guitar', 'Violin'].includes(formattedInstrument)) {
-                setSelectedInstrument(formattedInstrument);
-            }
-        }
-    }, [instrument]);
 
+
+useEffect(() => {
+    if (instrument) {
+        // Log the raw instrument parameter from the URL
+        console.log("Raw instrument parameter from URL:", instrument);
+        setSelectedInstrument(instrument);
+        
+        
+        
+        // // Set the instrument if it's valid
+        // if (['piano', 'guitar', 'drum', 'violin'].includes(formattedInstrument.toLowerCase())) {
+        //     setSelectedInstrument(formattedInstrument);
+        //     console.log("Valid instrument selected:", formattedInstrument);
+        // } else {
+        //     console.log("Invalid instrument name:", formattedInstrument);
+        // }
+    }
+}, [instrument]);
     
     useEffect(() => {
         // Initialize audio context
@@ -160,12 +170,12 @@ const Studio = () => {
 
     const getInstrumentKeys = () => {
         switch (selectedInstrument) {
-            case 'Guitar':
+            case 'guitar':
                 return guitarSound;
-            case 'Piano':
+            case 'piano':
                 return pianoSound;
-            case 'Violin':
-                return violinSound;
+            case 'drum':
+                return drumSound;
             default:
                 return pianoSound;
         }
@@ -246,7 +256,7 @@ const Studio = () => {
         console.log("Key Logged");
     };
     
-    console.log("AK:", activeKey);
+    // console.log("AK:", activeKey);
        
     const handleMouseDown = (keyObj) => {
         ActiveKey(keyObj.keyName)
@@ -310,7 +320,7 @@ const Studio = () => {
                         <p className='text-white poppins-regular p-2 select-none'>Control panel</p>
                     </div>
                     <div className='flex flex-col p-1 gap-2'>
-                        <InstrumentControl onInstrumentSelect={handleInstrumentSelect} />
+                        <InstrumentControl Instrument={selectedInstrument} onInstrumentSelect={handleInstrumentSelect} />
                         
                         {/* Volume Control */}
                         <div className="p-2 bg-gray-800 rounded">

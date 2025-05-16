@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Global audio context to manage all sounds
+// Global audio management
 let activeAudio = null;
 
 const SoundCard = ({ name, image, audio }) => {
@@ -23,32 +23,46 @@ const SoundCard = ({ name, image, audio }) => {
             clearTimeout(timerRef.current);
         }
         setIsPlaying(false);
+        
+        // Clear the active audio if it's this instance
+        if (activeAudio && activeAudio.stopSound === stopSound) {
+            activeAudio = null;
+        }
     };
 
-    // Handle card hover to play sound
     const handleMouseEnter = () => {
         if (!hasInteracted) return;
 
-        // Stop any currently playing sound
+        // Stop any currently playing audio
         if (activeAudio) {
             activeAudio.stopSound();
         }
 
-        // Create and play new audio
-        const sound = new Audio(audio);
-        audioRef.current = sound;
-        sound.play();
+        try {
+            if (!audioRef.current) {
+                audioRef.current = new Audio(audio);
+                audioRef.current.loop = false;
+            }
 
-        // Set this as the active audio globally
-        activeAudio = { stopSound };
-
-        // Update state
-        setIsPlaying(true);
-
-        // Set timeout to stop after 10 seconds
-        timerRef.current = setTimeout(() => {
-            stopSound();
-        }, 10000);
+            // Play the audio
+            audioRef.current.currentTime = 0;
+            audioRef.current.play()
+                .then(() => {
+                    setIsPlaying(true);
+                    // Set this as the active audio
+                    activeAudio = { stopSound };
+                    
+                    // Set timeout to stop the sound after 10 seconds
+                    timerRef.current = setTimeout(() => {
+                        stopSound();
+                    }, 10000);
+                })
+                .catch(error => {
+                    console.warn('Audio play failed:', error);
+                });
+        } catch (error) {
+            console.warn('Audio initialization failed:', error);
+        }
     };
 
     // Handle card mouse leave to stop sound
@@ -56,39 +70,33 @@ const SoundCard = ({ name, image, audio }) => {
         stopSound();
     };
 
-    // Handle card click to navigate to /studio/piano
+    // Handle card click to navigate to instrument page
     const handleClick = () => {
         setHasInteracted(true);
-        navigate('/studio/piano');
+        const instrumentPath = name.toLowerCase().replace(/\s+/g, '-');
+        navigate(`/studio/${instrumentPath}`);
     };
 
     // Toggle menu visibility
     const toggleMenu = (e) => {
-        e.stopPropagation(); // Prevent triggering the card's onClick
+        e.stopPropagation();
         setShowMenu(!showMenu);
     };
 
     // Handle "Use this instrument" option
     const handleUseInstrument = (e) => {
-        e.stopPropagation(); // Prevent triggering the card's onClick
-        // You can add routing or state management here
-        // For example, save to localStorage or Redux
+        e.stopPropagation();
         localStorage.setItem('selectedInstrument', JSON.stringify({ name, audio, image }));
         setShowMenu(false);
-
-        // Show a toast or notification
         alert(`${name} selected as your instrument!`);
     };
 
     // Handle "Send feedback" option
     const handleSendFeedback = (e) => {
-        e.stopPropagation(); // Prevent triggering the card's onClick
+        e.stopPropagation();
         setShowMenu(false);
-
-        // You can implement a feedback modal or form here
         const feedback = prompt(`Please enter your feedback for ${name}:`);
         if (feedback) {
-            // Send feedback to your backend or service
             console.log(`Feedback for ${name}: ${feedback}`);
             alert("Thank you for your feedback!");
         }
@@ -112,9 +120,6 @@ const SoundCard = ({ name, image, audio }) => {
     useEffect(() => {
         return () => {
             stopSound();
-            if (activeAudio && activeAudio.stopSound === stopSound) {
-                activeAudio = null;
-            }
         };
     }, []);
 
