@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import BannerCarousel from '../components/BannerCarousel';
 import { signup } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
 
 const avatars = [
   'https://i.ibb.co/mFMWyhnY/1.png',
@@ -19,11 +20,22 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isloading, setIsloading] = useState(false);
   const [showAvatarList, setShowAvatarList] = useState(true); // New state for avatar list visibility
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSignup = async () => {
     console.log("Signup in progress..");
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/;
+
+    if (!passwordRegex.test(password)) {
+        alert("Password must be at least 6 characters long and include at least one special character, one uppercase letter, and one lowercase letter.");
+        return; // Exit the function if password validation fails
+    }
     setIsloading(true);
     try {
       const response = await signup({
@@ -147,14 +159,23 @@ const Signup = () => {
             />
 
             <label htmlFor="password" className="text-white text-md poppins-regular">Password</label>
-            <input
-              value={password}
-              type="password"
-              id="password"
-              className="p-3 my-2 bg-[#0A0A0A] border-gray-700 border rounded-md lg:w-3/4 text-white"
-              placeholder="Password"
-              onChange={handleTextChange}
-            />
+            <div className="relative lg:w-3/4">
+              <input
+                value={password}
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                className="p-3 my-2 bg-[#0A0A0A] border-gray-700 border rounded-md w-full text-white"
+                placeholder="Password"
+                onChange={handleTextChange}
+              />
+              <button 
+                type="button"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
 
             {isloading ? (
               <button className="bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md items-center flex justify-center">

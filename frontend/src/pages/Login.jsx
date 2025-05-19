@@ -7,11 +7,13 @@ import {useNavigate} from "react-router-dom"
 import StorageService from '../services/StorageService'
 import  { setUser } from '../redux/reducers/userSlice'
 import {useDispatch, useSelector } from "react-redux"
+import { Eye, EyeOff } from 'lucide-react'
 
 const Login = () => {
     const dispatch = useDispatch()
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
     const navigate=useNavigate()
     const [isloading,setIsloading] = useState(false)
     const  userData = useSelector((state)=> state.user.user)
@@ -22,9 +24,11 @@ const Login = () => {
         setEmail(value)  }
         if(id === "password"){
             setPassword(value)
-
         }
-        
+    }
+    
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword)
     }
 
 const handleSubmit = () => {
@@ -45,10 +49,12 @@ const handleSubmit = () => {
         alert("Password must be at least 6 characters long and include at least one special character, one uppercase letter, and one lowercase letter.");
         return; // Exit the function if password validation fails
     }
+    if(password && email){
+          handleLogin();
 
-    handleLogin();
+    }
+  
 };
-
 
    const handleLogin= async() =>{
     setIsloading(true)
@@ -71,11 +77,7 @@ const handleSubmit = () => {
         console.log('Login failed')
         setIsloading(false)
     }
-
-
-
-    }
-
+   }
 
     console.log("email:", email)
     console.log("password:", password)
@@ -89,7 +91,6 @@ const handleSubmit = () => {
                 <img alt='logo' src={Images.LOGO}/>
                 <p className='text-white poppins-bold text-2xl'>ChordBeat</p>
                 </Link>
-
             </div>
 
             <div className='justify-center flex flex-col items-center w-full h-[90%] '>
@@ -98,8 +99,24 @@ const handleSubmit = () => {
             <label htmlFor='email' className='text-white text-md poppins-regular'>Email</label>
             <input value={email} type='mail' id='email' className='p-3 my-2 bg-[#0A0A0A]  border-gray-700 border rounded-md lg:w-3/4 text-white' onChange={handleTextChange} placeholder='Email '/>
             <label htmlFor='password' className='text-white text-md poppins-regular'>password</label>
-            <input value={password} type='password' id='password' className='p-3 my-2 bg-[#0A0A0A] border-gray-700 border rounded-md lg:w-3/4 text-white' onChange={handleTextChange} placeholder='Password'/>
-            <p className='text-white text-left text-sm poppins-regular cursor-pointer'>Forgot password?</p>
+            <div className="relative lg:w-3/4">
+                <input 
+                    value={password} 
+                    type={showPassword ? 'text' : 'password'} 
+                    id='password' 
+                    className='p-3 my-2 bg-[#0A0A0A] border-gray-700 border rounded-md w-full text-white' 
+                    onChange={handleTextChange} 
+                    placeholder='Password'
+                />
+                <button 
+                    type="button"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none"
+                    onClick={togglePasswordVisibility}
+                >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+            </div>
+         
             {
               isloading ? (<button className='bg-primary text-black p-2 lg:w-3/4 my-2 poppins-bold rounded-md items-center flex justify-center' ><img  alt='load'  className='w-7' src={Images.LOAD} /></button>
 
@@ -109,20 +126,12 @@ const handleSubmit = () => {
             }
             <div className='py-2 lg:w-3/4'>
                 <Link to='/signup'>  <p className='text-white text-center cursor-pointer '>Create an account</p></Link> 
-          
-
             </div>
-           
-            
             </div>
-            
-           
-
             </div>
- </div>
+        </div>
         <div className='bg-primary w-3/5 lg:block hidden' >
             <BannerCarousel/>
-
         </div>
     </div>
   )

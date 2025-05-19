@@ -10,7 +10,7 @@ const BannerCarousel = () => {
     <div className='hidden lg:block bg-black'>
       <Carousel autoPlay={true} interval={100000} infiniteLoop={true} showThumbs={false} showStatus={false} swipeable={true} >
         <div style={{
-    backgroundImage: `url(${Images.CAROUSEL1})`,
+    backgroundImage: `url(${Images.CAROUSEL3})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: '100vh'
@@ -24,7 +24,7 @@ const BannerCarousel = () => {
   }}>
         </div>
         <div style={{
-    backgroundImage: `url(${Images.CAROUSEL3})`,
+    backgroundImage: `url(${Images.CAROUSEL1})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: '100vh'

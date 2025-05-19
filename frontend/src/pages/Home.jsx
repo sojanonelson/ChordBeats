@@ -57,7 +57,9 @@ const Home = () => {
             <h1 className='text-white poppins-bold text-6xl select-none'>Your Digital Beat Studio</h1>
             <p className='text-white poppins-thin text-2xl'>Where Creativity Strikes a Perfect Harmony for free</p>
             
+            <Link to='/dashboard'>
             <button className="px-4 py-1 w-32 text-black hover:bg-black hover:text-primary transition duration-300 ease-in-out bg-primary rounded poppins-bold">Get Started</button>
+            </Link>
             </div> 
 
         </div>

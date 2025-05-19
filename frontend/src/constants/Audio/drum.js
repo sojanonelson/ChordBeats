@@ -18,19 +18,19 @@ const whiteKeys = [
 
 const blackKeys = [
   { keyName: "Cb3", audio: require("../../audio/drum/17.wav"), keyValue: "87" },
-  { keyName: "Db3", audio: require("../../audio/guitar/C3.mp3"), keyValue: "69" },
-  { keyName: "", audio: require("../../audio/guitar/C3.mp3"), keyValue: "" },
-  { keyName: "Fb3", audio: require("../../audio/guitar/C3.mp3"), keyValue: "84" },
-  { keyName: "Gb3", audio: require("../../audio/guitar/C3.mp3"), keyValue: "89" },
-  { keyName: "Ab3", audio: require("../../audio/guitar/C3.mp3"), keyValue: "85" },
-  { keyName: "", audio: require("../../audio/guitar/C3.mp3"), keyValue: "" },
-  { keyName: "Cb4", audio: require("../../audio/guitar/C3.mp3"), keyValue: "79" },
-  { keyName: "Db4", audio: require("../../audio/guitar/C3.mp3"), keyValue: "80" },
-  { keyName: "", audio: require("../../audio/guitar/C3.mp3"), keyValue: "" },
-  { keyName: "Fb4", audio: require("../../audio/guitar/C3.mp3"), keyValue: "221" },
-  { keyName: "Gb4", audio: require("../../audio/guitar/C3.mp3"), keyValue: "45" },
-  { keyName: "Ab4", audio: require("../../audio/guitar/C3.mp3"), keyValue: "36" },
-  { keyName: "", audio: require("../../audio/guitar/C3.mp3"), keyValue: "" },
+  { keyName: "Db3", audio: require("../../audio/drum/18.mp3"), keyValue: "69" },
+  { keyName: "", audio: require("../../audio/drum/19.mp3"), keyValue: "" },
+  { keyName: "Fb3", audio: require("../../audio/drum/20.mp3"), keyValue: "84" },
+  { keyName: "Gb3", audio: require("../../audio/drum/21.mp3"), keyValue: "89" },
+  { keyName: "Ab3", audio: require("../../audio/drum/22.mp3"), keyValue: "85" },
+  { keyName: "", audio: require("../../audio/drum/19.mp3"), keyValue: "" },
+  { keyName: "Cb4", audio: require("../../audio/drum/23.mp3"), keyValue: "79" },
+  { keyName: "Db4", audio: require("../../audio/drum/19.mp3"), keyValue: "80" },
+  { keyName: "", audio: require("../../audio/drum/19.mp3"), keyValue: "" },
+  { keyName: "Fb4", audio: require("../../audio/drum/24.mp3"), keyValue: "221" },
+  { keyName: "Gb4", audio: require("../../audio/drum/25.mp3"), keyValue: "45" },
+  { keyName: "Ab4", audio: require("../../audio/drum/26.mp3"), keyValue: "36" },
+  { keyName: "", audio: require("../../audio/drum/19.mp3"), keyValue: "" },
 ];
 
 const drumSound = { whiteKeys, blackKeys };
