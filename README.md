@@ -3,6 +3,8 @@
 </p>
 
 <h1 align="center">Chord Beats: Virtual Musical Instrument</h1>
+<p align="center"> <!-- Frontend --> <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" /> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" /> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+
 
 <p align="center">
   Chord Beats is an interactive <b>virtual musical instrument</b> that lets you create, play, and experiment with chords, beats, and melodies right in your browser.  
@@ -17,13 +19,6 @@
 - 🎧 Multiple sound sets (classical, pop, EDM, etc.)  
 - 🖥️ Works smoothly across devices  
 - 🎨 Clean and engaging UI/UX  
-
----
-
-## 🌐 Live Demo  
-👉 [Try Chord Beats here](https://chordbeat.vercel.app)  
-
----
 
 ## 🛠️ Tech Stack  
 - **Frontend:** React.js, HTML5, CSS3, JavaScript  
