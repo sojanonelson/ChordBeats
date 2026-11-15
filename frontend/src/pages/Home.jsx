@@ -1,133 +1,237 @@
-import React, { useState, useEffect,useRef  } from 'react';
-import { AlbumData, DashboardData, Images,InstrumentData } from '../constants'
-import Navbar from '../components/Navbar'
+import React, { useState, useEffect, useRef } from 'react';
+import { AlbumData, DashboardData, Images } from '../constants';
+import Navbar from '../components/Navbar';
 import HomeAlbumCard from '../components/HomeAlbumCard';
 import Footer from '../components/Footer';
-import {useSelector} from "react-redux"
-import {Link, useNavigate} from "react-router-dom"
+import { Link, useNavigate } from 'react-router-dom';
+import { 
+  Sparkles, 
+  ArrowRight, 
+  Play, 
+  Disc, 
+  SlidersHorizontal,
+  Flame
+} from 'lucide-react';
+
 const Home = () => {
-  const userLogged = useSelector((state)=> state.general.userLoggedIn)
+  const navigate = useNavigate();
   const [counters, setCounters] = useState({
     instruments: 50,
-    soundEffects: 0,
-    musiciansLoved: 5000
+    soundEffects: 10,
+    musiciansLoved: 4500
   });
 
-  const countingRef = useRef(null)
-  const navigate = useNavigate()
+  const countingRef = useRef(null);
 
   useEffect(() => {
+    let interval = null;
+    const node = countingRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Start counting animation
-          const countersInterval = setInterval(() => {
-            setCounters(prevCounters => ({
-              instruments: prevCounters.instruments < 140 ? prevCounters.instruments + 10 : 140,
-              soundEffects: prevCounters.soundEffects < 100 ? prevCounters.soundEffects + 10 : 100,
-              musiciansLoved: prevCounters.musiciansLoved < 6000 ? prevCounters.musiciansLoved + 30 : 6000
-            }));
-          }, 50); // Adjust interval for smoother animation and faster counting
-
-          return () => clearInterval(countersInterval);
+          interval = setInterval(() => {
+            setCounters((prev) => {
+              const nextInst = prev.instruments < 140 ? prev.instruments + 5 : 140;
+              const nextFx = prev.soundEffects < 120 ? prev.soundEffects + 5 : 120;
+              const nextLove = prev.musiciansLoved < 6500 ? prev.musiciansLoved + 100 : 6500;
+              if (nextInst >= 140 && nextFx >= 120 && nextLove >= 6500) {
+                clearInterval(interval);
+              }
+              return {
+                instruments: nextInst,
+                soundEffects: nextFx,
+                musiciansLoved: nextLove
+              };
+            });
+          }, 40);
         }
       },
-      { threshold: 0.5 } // Change threshold as needed
+      { threshold: 0.3 }
     );
 
-    if (countingRef.current) {
-      observer.observe(countingRef.current);
+    if (node) {
+      observer.observe(node);
     }
 
     return () => {
-      if (countingRef.current) {
-        observer.unobserve(countingRef.current);
-      }
+      if (node) observer.unobserve(node);
+      if (interval) clearInterval(interval);
     };
   }, []);
 
-
   return (
-    <div className='flex flex-col bg-black '>
-        <Navbar/>
-        <div className='h-[65vh]' style={{backgroundImage: `url(${Images.BANNER0}) ` , backgroundSize: 'cover'}}>
-            <div className='flex flex-col items-right justify-center px-5 lg:p-10 gap-2 lg:mt-16   h-full'>
+    <div className="min-h-screen bg-black flex flex-col text-white selection:bg-primary selection:text-black">
+      <Navbar />
 
-           
-            <h1 className='text-white poppins-bold text-6xl select-none'>Your Digital Beat Studio</h1>
-            <p className='text-white poppins-thin text-2xl'>Where Creativity Strikes a Perfect Harmony for free</p>
+      {/* Hero Section with Glowing Orange Ambience */}
+      <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 px-6 lg:px-12 bg-black">
+        {/* Ambient Orange Glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-primary/20 blur-[130px] pointer-events-none rounded-full" />
+
+        <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
+          
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#141414] border border-neutral-800 shadow-md text-xs font-semibold text-primary mb-6">
+            <Sparkles size={14} className="text-primary" />
+            Next-Gen In-Browser Audio Studio • 100% Free
+          </div>
+
+          {/* Main Title */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.15] mb-6">
+            Your Digital <span className="text-primary">Beat Studio</span>
+          </h1>
+
+          <p className="text-lg sm:text-xl text-neutral-300 max-w-2xl leading-relaxed mb-10">
+            Where creativity strikes a perfect harmony. Compose chords, record live takes, experiment with polyphonic instruments, and export your tracks instantly.
+          </p>
+
+          {/* CTA Group */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+            <Link
+              to="/studio"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-primary hover:bg-primary-hover text-black font-bold shadow-glow-primary transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 text-base"
+            >
+              <Play size={18} className="fill-black" />
+              Launch Studio Now
+            </Link>
             
-            <button className="px-4 py-1 w-32 text-black hover:bg-black hover:text-primary transition duration-300 ease-in-out bg-primary rounded poppins-bold">Get Started</button>
-            </div> 
-
-        </div>
-        <div className='lg:my-5'>
-
-          <p className='text-primary poppins-medium text-center py-2 lg:py-5 text-md lg:text-xl'>Seamless Beat Creation, Limitless Possibilities.</p>
-          <div className='bg-secondary p-4 lg:p-8 lg:mx-10 mx-2 rounded-md flex lg:flex-row justify-between lg:px-20 gap-2'>
-
-          {DashboardData.Instruments.map((item, index) => (
-  <div key={item.id} className='flex flex-col justify-center items-center select-none'>
-    <img src={item.image} alt='instrument' className='h-10 w-10 ' />
-    <p className='text-white poppins-regular pt-2 hidden lg:block '>{item.name}</p>
-  </div>
-))}
-</div>
-
-          <div className='flex flex-col lg:flex-row bg-black-next justify-between pt-1 lg:pt-20 mt-10 items-center'>
-            <div className='flex flex-col lg:w-3/6 justify-center lg:pl-28'>
-              <div className='hidden lg:block'>
-              <h1 className='text-white flex gap-1 text-6xl poppins-bold pt-5 lg:pt-0'>Your <p className='text-primary'>Rhythm</p>, Your <p className='text-primary'>Rules</p></h1> </div>
-              <div className='lg:hidden flex flex-col pt-10 px-2'>
-                <h1 className='text-white flex gap-1 text-3xl poppins-bold'>Your<p className='text-primary'>Rhythm</p>,</h1>
-                <h1 className='text-white flex gap-1 text-3xl poppins-bold'>Your<p className='text-primary'>Rules</p></h1>
-              </div>
-              
-              <p className='poppins-thin text-white py-1 px-2 '>Record, mix and collaborate on your music projects from start to finish with our best-in-class and 100% free Studio.</p>
-
-              <div ref={countingRef}  className='flex lg:flex-row  px-5 lg:px-0 gap-10 lg:gap-16 lg:text-xl py-5'>
-              <div className='counting flex flex-col items-center'>
-          <p className='text-white'>{counters.instruments}+</p>
-          <p className='text-primary'>Instruments</p>
-        </div>
-        <div className='counting flex flex-col items-center'>
-          <p className='text-white'>{counters.soundEffects}+</p>
-          <p className='text-primary'>Sound effects</p>
-        </div>
-        <div className='counting flex flex-col items-center'>
-          <p className='text-white'>{counters.musiciansLoved}+</p>
-          <p className='text-primary'>Musicians loved</p>
-        </div>
-              </div>
-              <Link to='/dashboard'> <button className="px-4 py-2 my-10 w-1/4 font-semibold text-white bg-primary hover:bg-white hover:border-primary hover:text-primary border-black  border-2 rounded-md hover mx-4 transition">Explore</button></Link>
-             
-            </div>
-            <div className='items-center justify-center flex'>
-              <img className='lg:w-3/4 ' alt='banner2' src={Images.BANNER1}/>
-            </div>
-
+            <Link
+              to="/dashboard"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#141414] hover:bg-[#1E1E1E] border border-neutral-800 text-white font-medium transition-all flex items-center justify-center gap-2 text-base"
+            >
+              <Disc size={18} className="text-primary" />
+              Explore Instruments
+            </Link>
           </div>
 
-          <div className='flex flex-col items-center lg:m-5 pt-10 lg:p-10 p-5 bg-black-next rounded-lg '>
-            <div className='flex flex-row  items-center gap-2'>
-              <img src={Images.LOGO} className='lg:w-10 lg:h-10 w-5 h-5 animate-spin'  alt='logo'/>
-              <p className='poppins-bold lg:text-3xl text-xl text-primary'>ChordBeat Today</p>
+        </div>
+      </section>
 
-            </div>
-            <div className='flex flex-col lg:flex-row gap-10 lg:gap-20 py-10'>
-           
-
-{AlbumData.map((item, index) => (
-        <HomeAlbumCard key={index} image={item.image} title={item.title} />
-      ))}
-            </div>
-
+      {/* Quick Launch Instruments Strip */}
+      <section className="px-6 lg:px-12 -mt-6 mb-16 relative z-20">
+        <div className="max-w-7xl mx-auto bg-[#121212] border border-neutral-800 p-4 md:p-6 rounded-2xl shadow-xl">
+          <div className="flex items-center justify-between pb-4 border-b border-neutral-800 mb-4">
+            <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2">
+              <SlidersHorizontal size={14} className="text-primary" />
+              Quick Play Instruments
+            </span>
+            <Link to="/dashboard" className="text-xs text-primary hover:text-primary-hover flex items-center gap-1 font-bold">
+              View All <ArrowRight size={12} />
+            </Link>
           </div>
-          {/* <Footer/> */}
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+            {DashboardData.Instruments.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => navigate(`/studio/${item.name.toLowerCase()}`)}
+                className="group flex flex-col items-center justify-center p-3 rounded-xl bg-black/60 hover:bg-[#1A1A1A] border border-neutral-800/80 hover:border-primary/50 cursor-pointer transition-all transform hover:-translate-y-1"
+              >
+                <div className="w-12 h-12 rounded-xl bg-[#181818] flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                  <img src={item.image} alt={item.name} className="h-7 w-7 object-contain" />
+                </div>
+                <span className="text-xs font-medium text-white group-hover:text-primary transition-colors">
+                  {item.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Feature & Rhythm Section with Live Counters */}
+      <section className="px-6 lg:px-12 py-16 bg-[#0D0D0D] border-y border-neutral-800">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left Text & Stats */}
+          <div className="lg:col-span-6 flex flex-col gap-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/10 border border-primary/20 text-xs font-bold text-primary w-fit">
+              <Flame size={14} className="text-primary" />
+              Boundless Sound Creation
+            </div>
+
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+              Your <span className="text-primary">Rhythm</span>, <br />
+              Your <span className="text-primary">Rules</span>.
+            </h2>
+
+            <p className="text-base text-neutral-400 leading-relaxed">
+              Record, loop, and practice notes on your music ideas from start to finish. Our browser studio delivers zero-latency tactile response, pitch control, and preset song accompaniments right at your fingertips.
+            </p>
+
+            {/* Counters Grid */}
+            <div ref={countingRef} className="grid grid-cols-3 gap-4 pt-4 border-t border-neutral-800">
+              <div className="flex flex-col">
+                <span className="font-mono text-2xl sm:text-3xl font-extrabold text-white">
+                  {counters.instruments}+
+                </span>
+                <span className="text-xs text-primary font-bold mt-1">Instruments</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-mono text-2xl sm:text-3xl font-extrabold text-white">
+                  {counters.soundEffects}+
+                </span>
+                <span className="text-xs text-primary font-bold mt-1">Sound Presets</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-mono text-2xl sm:text-3xl font-extrabold text-white">
+                  {counters.musiciansLoved.toLocaleString()}+
+                </span>
+                <span className="text-xs text-primary font-bold mt-1">Tracks Played</span>
+              </div>
+            </div>
+
+            <div>
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-black font-bold text-sm shadow-glow-primary hover:bg-primary-hover transition-all mt-2"
+              >
+                Browse Sound Library <ArrowRight size={15} />
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Banner Showcase */}
+          <div className="lg:col-span-6 flex items-center justify-center">
+            <div className="relative w-full max-w-lg rounded-2xl overflow-hidden border border-neutral-800 p-2 shadow-2xl bg-[#141414]">
+              <img
+                src={Images.BANNER1}
+                alt="ChordBeat Studio Interface"
+                className="w-full h-auto rounded-xl object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none rounded-xl" />
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Showcase Today Albums / Sound Packs */}
+      <section className="px-6 lg:px-12 py-20 max-w-7xl mx-auto w-full">
+        <div className="flex flex-col items-center text-center mb-12">
+          <div className="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider mb-2">
+            <Disc size={16} className="animate-spin text-primary" />
+            ChordBeat Today
+          </div>
+          <h3 className="text-3xl sm:text-4xl font-extrabold text-white">
+            Curated Beat Packs & Melodies
+          </h3>
+          <p className="text-sm text-neutral-400 mt-2 max-w-md">
+            Dive into trending sound collections handpicked for instant inspiration.
+          </p>
         </div>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {AlbumData.map((item, index) => (
+            <HomeAlbumCard key={index} image={item.image} title={item.title} />
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Home 
+export default Home;
