@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Images } from '../constants';
 import { Link } from 'react-router-dom';
-import { Music, Heart, Mail, Send, Sparkles } from 'lucide-react';
+import { Music, Heart, Mail, Send, Sparkles, ExternalLink } from 'lucide-react';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -96,10 +96,29 @@ const Footer = () => {
       </div>
 
       {/* Bottom Legal / Credits */}
-      <div className="max-w-7xl mx-auto mt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 gap-4">
-        <p className="flex items-center gap-1">
+      <div className="max-w-7xl mx-auto mt-8 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500 gap-4 pt-4">
+        <p className="flex items-center gap-1.5">
           Made with <Heart size={14} className="text-primary inline fill-primary" /> for musicians & beatmakers everywhere.
         </p>
+
+        {/* Professional Developer Credit */}
+        <div className="flex items-center gap-2">
+          <span className="text-neutral-400">Designed & Developed by</span>
+          <a
+            href="https://sojanonelson.site"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Visit Sojan Nelson's Portfolio"
+            className="group inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#121212] hover:bg-[#1a1a1a] border border-neutral-800 hover:border-primary/60 text-white transition-all shadow-sm"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block group-hover:shadow-glow-primary-sm transition-shadow" />
+            <span className="font-bold text-xs text-neutral-200 group-hover:text-primary transition-colors">
+              Sojan Nelson
+            </span>
+            <ExternalLink size={12} className="text-neutral-400 group-hover:text-primary transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        </div>
+
         <p>© {new Date().getFullYear()} ChordBeat. All rights reserved.</p>
       </div>
     </footer>
