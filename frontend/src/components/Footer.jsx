@@ -113,7 +113,7 @@ const Footer = () => {
           >
             <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block group-hover:shadow-glow-primary-sm transition-shadow" />
             <span className="font-bold text-xs text-neutral-200 group-hover:text-primary transition-colors">
-              Sojan Nelson
+              Sojan O Nelson
             </span>
             <ExternalLink size={12} className="text-neutral-400 group-hover:text-primary transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
