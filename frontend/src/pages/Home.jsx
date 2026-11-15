@@ -5,7 +5,6 @@ import HomeAlbumCard from '../components/HomeAlbumCard';
 import Footer from '../components/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
-  Sparkles, 
   ArrowRight, 
   Play, 
   Disc, 
@@ -70,12 +69,6 @@ const Home = () => {
 
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
           
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#141414] border border-neutral-800 shadow-md text-xs font-semibold text-primary mb-6">
-            <Sparkles size={14} className="text-primary" />
-            Next-Gen In-Browser Audio Studio • 100% Free
-          </div>
-
           {/* Main Title */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.15] mb-6">
             Your Digital <span className="text-primary">Beat Studio</span>
