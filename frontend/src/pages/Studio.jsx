@@ -18,7 +18,9 @@ import {
   Music2, 
   Activity, 
   Piano, 
-  Layers
+  Layers,
+  Maximize2,
+  Minimize2
 } from 'lucide-react';
 
 // Seam mappings for black keys: white key index to the left of the black key
@@ -62,6 +64,7 @@ const Studio = () => {
   const [playbackLog, setPlaybackLog] = useState(null);
   const [isPlayingSequence, setIsPlayingSequence] = useState(false);
   const [selectedDemoSong, setSelectedDemoSong] = useState('');
+  const [isFullscreen, setIsFullscreen] = useState(false);
   
   // References
   const audioContextRef = useRef(null);
@@ -97,6 +100,25 @@ const Studio = () => {
       if (recordingTimerRef.current) clearInterval(recordingTimerRef.current);
     };
   }, []);
+
+  // Listen to browser fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+  };
 
   // Pre-load audio buffer cache
   const getAudioBuffer = useCallback(async (audioSrc) => {
@@ -368,14 +390,14 @@ const Studio = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col select-none text-white selection:bg-primary selection:text-black">
-      <Navbar />
+    <div className={`h-screen w-screen bg-black flex flex-col select-none text-white selection:bg-primary selection:text-black overflow-hidden ${isFullscreen ? 'p-0' : ''}`}>
+      {!isFullscreen && <Navbar />}
 
-      {/* Main Studio Body */}
-      <div className="flex-1 flex flex-col max-w-[1600px] w-full mx-auto p-3 md:p-6 gap-4">
+      {/* Main Studio Body - Full Width & Height DAW */}
+      <div className="flex-1 flex flex-col w-full h-full p-2 sm:p-3 md:p-4 gap-2.5 overflow-hidden">
         
         {/* Top Studio HUD & Transport Rack */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 bg-[#121212] border border-neutral-800 p-4 rounded-2xl shadow-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2.5 bg-[#121212] border border-neutral-800 p-2.5 sm:p-3 rounded-xl shadow-xl shrink-0">
           
           {/* Left: Instrument Selector & Mode */}
           <div className="lg:col-span-3 flex flex-col gap-2">
@@ -554,32 +576,44 @@ const Studio = () => {
         </div>
 
         {/* Studio Workspace & Interactive Piano Roll */}
-        <div className="flex-1 bg-[#121212] border border-neutral-800 p-4 md:p-6 rounded-2xl flex flex-col justify-between gap-4 shadow-xl">
+        <div className="flex-1 min-h-0 bg-[#121212] border border-neutral-800 p-3 sm:p-4 rounded-xl flex flex-col justify-between gap-2 shadow-xl overflow-hidden">
           
-          {/* Top Bar above Keyboard: Quick Guide */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-neutral-400 pb-2 border-b border-neutral-800 gap-2">
+          {/* Top Bar above Keyboard: Quick Guide & Fullscreen Toggle */}
+          <div className="flex items-center justify-between text-xs text-neutral-400 pb-2 border-b border-neutral-800 gap-2 shrink-0">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
-              <span className="font-bold text-white uppercase tracking-wider">
+              <span className="font-bold text-white uppercase tracking-wider text-xs sm:text-sm">
                 Virtual {selectedInstrument} Keyboard
               </span>
-              <span className="text-neutral-400 text-[11px] hidden md:inline">
+              <span className="text-neutral-500 text-[11px] hidden md:inline">
                 (Click or use your physical computer keyboard)
               </span>
             </div>
 
             <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1 text-[11px]">
-                <kbd className="px-1.5 py-0.5 rounded bg-black border border-neutral-800 text-white font-mono">A-J</kbd> Naturals
-              </span>
-              <span className="flex items-center gap-1 text-[11px]">
-                <kbd className="px-1.5 py-0.5 rounded bg-black border border-neutral-800 text-white font-mono">W,E,T,Y,U</kbd> Sharps/Flats
-              </span>
+              <div className="hidden sm:flex items-center gap-3">
+                <span className="flex items-center gap-1 text-[11px]">
+                  <kbd className="px-1.5 py-0.5 rounded bg-black border border-neutral-800 text-white font-mono">A-J</kbd> Naturals
+                </span>
+                <span className="flex items-center gap-1 text-[11px]">
+                  <kbd className="px-1.5 py-0.5 rounded bg-black border border-neutral-800 text-white font-mono">W,E,T,Y,U</kbd> Sharps/Flats
+                </span>
+              </div>
+
+              {/* Fullscreen Toggle Button */}
+              <button
+                onClick={toggleFullScreen}
+                title={isFullscreen ? "Exit Fullscreen" : "Full Screen Studio Mode"}
+                className="p-1.5 px-2.5 rounded-lg bg-black/60 hover:bg-neutral-800 border border-neutral-800 text-neutral-300 hover:text-primary transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+              >
+                {isFullscreen ? <Minimize2 size={14} className="text-primary" /> : <Maximize2 size={14} className="text-primary" />}
+                <span className="hidden sm:inline">{isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}</span>
+              </button>
             </div>
           </div>
 
-          {/* Seamless Mathematical Piano Keyboard */}
-          <div className="relative w-full h-[260px] md:h-[320px] select-none py-2">
+          {/* Seamless Mathematical Piano Keyboard - Flexes to fill available height */}
+          <div className="relative flex-1 min-h-[220px] w-full select-none py-1">
             
             {/* White Keys Row (Natural Notes) */}
             <div className="relative flex flex-row w-full h-full">
@@ -665,7 +699,7 @@ const Studio = () => {
           </div>
 
           {/* Bottom Custom File Track Upload */}
-          <div className="pt-2 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="pt-2 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
             <div className="w-full sm:w-auto flex-1">
               <FileUploadComponent
                 onFileUpload={(parsed) => {
