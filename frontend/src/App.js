@@ -8,6 +8,7 @@ import { fetchUserData } from "./services/userService";
 import { useDispatch } from "react-redux";
 import { setAppLoading, setUserLoggedIn } from "./redux/reducers/generalSlice";
 import MaintenanceModal from "./components/MaintenanceModal";
+import MouseEffect from "./components/MouseEffect";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <div className="App bg-black min-h-screen text-white">
+      <MouseEffect />
       <MaintenanceModal />
       <BrowserRouter>
         <RootNavigator /> 
