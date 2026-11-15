@@ -7,6 +7,7 @@ import { setUser } from "./redux/reducers/userSlice";
 import { fetchUserData } from "./services/userService";
 import { useDispatch } from "react-redux";
 import { setAppLoading, setUserLoggedIn } from "./redux/reducers/generalSlice";
+import MaintenanceModal from "./components/MaintenanceModal";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <div className="App bg-black min-h-screen text-white">
+      <MaintenanceModal />
       <BrowserRouter>
         <RootNavigator /> 
       </BrowserRouter>
