@@ -52,3 +52,90 @@ body {
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+/* Music Piano & Chord Reveal Animations */
+@keyframes pianoPopup {
+  0% {
+    opacity: 0;
+    transform: scale(0.35) translateY(24px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.12) translateY(-4px);
+  }
+  80% {
+    transform: scale(0.96) translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pianoKeyTap {
+  0%, 100% {
+    height: 12px;
+    background-color: #e5e5e5;
+  }
+  50% {
+    height: 22px;
+    background-color: #F48400;
+    box-shadow: 0 0 12px rgba(244, 132, 0, 0.7);
+  }
+}
+
+@keyframes chordReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.95);
+    filter: blur(6px);
+  }
+  70% {
+    transform: translateY(-3px) scale(1.01);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+@keyframes noteFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) rotate(-15deg) scale(0.7);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-8px) rotate(10deg) scale(1.15);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-28px) rotate(-5deg) scale(0.85);
+  }
+}
+
+.animate-piano-popup {
+  animation: pianoPopup 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-chord-1 {
+  animation: chordReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+
+.animate-chord-2 {
+  animation: chordReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+}
+
+.animate-note-float-1 {
+  animation: noteFloat 2.4s ease-in-out infinite 0.2s;
+}
+
+.animate-note-float-2 {
+  animation: noteFloat 2.8s ease-in-out infinite 0.8s;
+}
+
+.animate-note-float-3 {
+  animation: noteFloat 2.2s ease-in-out infinite 1.4s;
+}

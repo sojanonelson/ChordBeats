@@ -69,9 +69,50 @@ const Home = () => {
 
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
           
-          {/* Main Title */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.15] mb-6">
-            Your Digital <span className="text-primary">Beat Studio</span>
+          {/* Music Piano Symbol Pop-up */}
+          <div className="animate-piano-popup mb-5 flex flex-col items-center select-none">
+            <div className="relative inline-flex items-center gap-3 px-4 py-2 rounded-2xl bg-[#121212]/90 border border-neutral-800 shadow-[0_10px_35px_rgba(0,0,0,0.8)] backdrop-blur-sm group hover:border-primary/50 transition-all">
+              
+              {/* Floating Musical Notes */}
+              <span className="absolute -top-3.5 -left-3 text-primary text-xs font-bold animate-note-float-1 pointer-events-none">
+                ♪
+              </span>
+              <span className="absolute -top-4 right-1 text-primary text-sm font-bold animate-note-float-2 pointer-events-none">
+                ♫
+              </span>
+              <span className="absolute -bottom-2.5 -right-3 text-amber-400 text-xs font-bold animate-note-float-3 pointer-events-none">
+                ♩
+              </span>
+
+              {/* Animated Mini Piano Keys Motif */}
+              <div className="flex items-end gap-[3px] h-6 px-1.5 py-1 bg-black rounded-lg border border-neutral-800 shadow-inner">
+                <span className="w-1.5 bg-white rounded-b-sm animate-[pianoKeyTap_1.2s_ease-in-out_infinite_0.1s]" style={{ height: '14px' }} />
+                <span className="w-1.5 bg-primary rounded-b-sm animate-[pianoKeyTap_1.2s_ease-in-out_infinite_0.3s]" style={{ height: '18px' }} />
+                <span className="w-1.5 bg-white rounded-b-sm animate-[pianoKeyTap_1.2s_ease-in-out_infinite_0.5s]" style={{ height: '13px' }} />
+                <span className="w-1.5 bg-primary rounded-b-sm animate-[pianoKeyTap_1.2s_ease-in-out_infinite_0.7s]" style={{ height: '20px' }} />
+                <span className="w-1.5 bg-white rounded-b-sm animate-[pianoKeyTap_1.2s_ease-in-out_infinite_0.9s]" style={{ height: '15px' }} />
+                <span className="w-1.5 bg-primary rounded-b-sm animate-[pianoKeyTap_1.2s_ease-in-out_infinite_0.4s]" style={{ height: '17px' }} />
+                <span className="w-1.5 bg-white rounded-b-sm animate-[pianoKeyTap_1.2s_ease-in-out_infinite_0.2s]" style={{ height: '14px' }} />
+              </div>
+
+              <div className="flex items-center gap-1.5">
+                <span className="text-[11px] font-mono font-bold tracking-wider text-neutral-300 uppercase">
+                  ChordBeat Studio
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block animate-ping" />
+              </div>
+            </div>
+          </div>
+
+          {/* Main Title with Staggered Music Chord Reveal */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.15] mb-6 overflow-hidden">
+            <span className="inline-block animate-chord-1 mr-3 sm:mr-4">
+              Your Digital
+            </span>
+            <span className="inline-block animate-chord-2 text-primary relative">
+              Beat Studio
+              <span className="block h-[3px] w-full bg-gradient-to-r from-transparent via-primary to-transparent mt-1.5 rounded-full opacity-80" />
+            </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-neutral-300 max-w-2xl leading-relaxed mb-10">
