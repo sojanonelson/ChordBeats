@@ -1,42 +1,49 @@
-import axios from 'axios'
-import { ApiConstants } from '../constants'
+import axios from 'axios';
 
-
-console.log("Login in progress")
-console.log("URL:", process.env.REACT_APP_BACKEND_URL)
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000/api';
 
 const axiosInstance = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
+  baseURL: BACKEND_URL,
 });
 
-const login= async(userData)=>{
-   
-    
-    try{
+const login = async (userData) => {
+  try {
+    const response = await axiosInstance.post('/user/login', userData);
+    return response.data;
+  } catch (err) {
+    console.error("Login failed:", err);
+    throw err;
+  }
+};
 
-        const response =  await  axiosInstance.post('/user/login', userData);
-        console.log("Login response:", response.data)
-        return response.data
+const signup = async (userData) => {
+  try {
+    const response = await axiosInstance.post('/user/register', userData);
+    return response.data;
+  } catch (err) {
+    console.error("Register failed:", err);
+    throw err;
+  }
+};
 
-    }catch(err){
-        console.log(err)
-        console.log("Login failed:", err)
-    }
+const googleLogin = async (userData) => {
+  try {
+    const response = await axiosInstance.post('/user/google-login', userData);
+    return response.data;
+  } catch (err) {
+    console.error("Google login failed:", err);
+    throw err;
+  }
+};
 
-}
+const githubLogin = async (userData) => {
+  try {
+    const response = await axiosInstance.post('/user/github-login', userData);
+    return response.data;
+  } catch (err) {
+    console.error("GitHub login failed:", err);
+    throw err;
+  }
+};
 
-const signup = async (userData)=>{
-    try{
-        console.log("UserData from service:", userData)
-        const response = await axiosInstance.post('/user/register', userData)
-        console.log("Register response:", response.data)
-        return response.data
-    }catch(err){
-        console.log(err)
-        console.log("Register failed:", err)
-        
-    }
-}
-
-
-export   {login,signup}
+export { login, signup, googleLogin, githubLogin };
