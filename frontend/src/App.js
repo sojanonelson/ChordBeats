@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { setAppLoading, setUserLoggedIn } from "./redux/reducers/generalSlice";
 import MaintenanceModal from "./components/MaintenanceModal";
 import MouseEffect from "./components/MouseEffect";
+import NotificationPrompt from "./components/NotificationPrompt";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App() {
   return (
     <div className="App bg-black min-h-screen text-white">
       <MouseEffect />
+      <NotificationPrompt />
       <MaintenanceModal />
       <BrowserRouter>
         <RootNavigator /> 

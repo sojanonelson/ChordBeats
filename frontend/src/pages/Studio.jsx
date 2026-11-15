@@ -7,6 +7,7 @@ import guitarSound from '../constants/Audio/guitar';
 import drumSound from '../constants/Audio/drum';
 import FileUploadComponent from '../components/FileUploadComponent';
 import StorageService from '../services/StorageService';
+import { sendNotification } from '../services/notificationService';
 import { demoSongs } from '../constants/demoSongs';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
@@ -322,6 +323,12 @@ const Studio = () => {
     if (isRecording) {
       setIsRecording(false);
       if (recordingTimerRef.current) clearInterval(recordingTimerRef.current);
+      if (keyPressLog.length > 0) {
+        sendNotification('Recording Saved! ⏺️', {
+          body: `Saved ${keyPressLog.length} notes in ${recordingDuration}s. Ready to export or play back!`,
+          icon: '/favicon.ico',
+        });
+      }
     } else {
       setKeyPressLog([]);
       setRecordingDuration(0);
@@ -335,13 +342,19 @@ const Studio = () => {
 
   const downloadRecording = () => {
     if (keyPressLog.length === 0) return;
+    const filename = `chordbeat_${selectedInstrument}_${Date.now()}.json`;
     const blob = new Blob([JSON.stringify(keyPressLog, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `chordbeat_${selectedInstrument}_${Date.now()}.json`;
+    a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
+
+    sendNotification('Audio Exported! 🎧', {
+      body: `Your ${selectedInstrument} recording (${keyPressLog.length} notes) was exported successfully.`,
+      icon: '/favicon.ico',
+    });
   };
 
   // Play Sequence (recorded or demo)

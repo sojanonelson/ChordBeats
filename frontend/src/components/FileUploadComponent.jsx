@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { Upload, FileUp, X, RotateCcw, AlertCircle } from 'lucide-react';
+import { sendNotification } from '../services/notificationService';
 
 export default function FileUploadComponent({ onFileUpload }) {
   const [file, setFile] = useState(null);
@@ -24,6 +25,10 @@ export default function FileUploadComponent({ onFileUpload }) {
             const content = e.target.result;
             const parsedContent = JSON.parse(content);
             onFileUpload(parsedContent);
+            sendNotification('Beat Track Loaded! 🎶', {
+              body: `Loaded ${selectedFile.name} into ChordBeat Studio.`,
+              icon: '/favicon.ico',
+            });
           } catch (error) {
             console.error('Error parsing JSON:', error);
             setUploadStatus('error');
