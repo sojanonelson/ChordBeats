@@ -432,7 +432,7 @@ const Studio = () => {
                   className="bg-[#1A1A1A] text-white text-xs rounded-lg px-2 py-1 outline-none border border-neutral-800 hover:border-primary transition-colors cursor-pointer"
                 >
                   <option value="">Select Pre-made Song</option>
-                  {demoSongs.map((song) => (
+                  {(demoSongs || []).map((song) => (
                     <option key={song.id} value={song.id}>
                       {song.title} - {song.artist}
                     </option>
@@ -583,7 +583,7 @@ const Studio = () => {
             
             {/* White Keys Row (Natural Notes) */}
             <div className="relative flex flex-row w-full h-full">
-              {soundBank.whiteKeys.map((keyObj, index) => {
+              {(soundBank?.whiteKeys || []).map((keyObj, index) => {
                 const isPressed = activeNotes[keyObj.keyName];
                 return (
                   <div
@@ -591,7 +591,7 @@ const Studio = () => {
                     onMouseDown={() => triggerKeyDown(keyObj)}
                     onMouseUp={() => triggerKeyUp(keyObj)}
                     onMouseLeave={() => triggerKeyUp(keyObj)}
-                    style={{ width: `${100 / soundBank.whiteKeys.length}%` }}
+                    style={{ width: `${100 / (soundBank?.whiteKeys?.length || 1)}%` }}
                     className={`relative h-full rounded-b-xl cursor-pointer border-r border-neutral-300 transition-all duration-75 flex flex-col justify-end items-center pb-4 ${
                       isPressed
                         ? 'bg-gradient-to-t from-primary to-amber-300 text-black shadow-glow-primary translate-y-1'
@@ -616,14 +616,14 @@ const Studio = () => {
             </div>
 
             {/* Black Keys Layer (Sharps / Flats) */}
-            {soundBank.blackKeys.map((keyObj, index) => {
+            {(soundBank?.blackKeys || []).map((keyObj, index) => {
               const seamIndex = BLACK_KEY_SEAM_OFFSETS[index];
               if (seamIndex === null || seamIndex === undefined || !keyObj.keyName) {
                 return null;
               }
 
               const isPressed = activeNotes[keyObj.keyName];
-              const totalWhiteKeys = soundBank.whiteKeys.length;
+              const totalWhiteKeys = soundBank?.whiteKeys?.length || 15;
               const leftPercentage = ((seamIndex + 1) / totalWhiteKeys) * 100;
               const keyWidthPercentage = (1 / totalWhiteKeys) * 100 * 0.68;
 
