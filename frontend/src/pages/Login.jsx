@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Images } from '../constants';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { login, googleLogin, githubLogin } from '../services/authService';
 import StorageService from '../services/StorageService';
 import { setUser } from '../redux/reducers/userSlice';
@@ -18,6 +18,8 @@ import {
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const fromPath = location.state?.from?.pathname || '/';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -52,7 +54,7 @@ const Login = () => {
         dispatch(setUserLoggedIn(true));
         StorageService.saveUserID(res.user._id);
         StorageService.saveToken(res.user.token);
-        navigate('/');
+        navigate(fromPath, { replace: true });
       } else {
         setErrorMessage(res?.message || 'Google login failed.');
       }
@@ -62,7 +64,7 @@ const Login = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, fromPath]);
 
   useEffect(() => {
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -121,7 +123,7 @@ const Login = () => {
         dispatch(setUserLoggedIn(true));
         StorageService.saveUserID(res.user._id);
         StorageService.saveToken(res.user.token);
-        navigate('/');
+        navigate(fromPath, { replace: true });
       } else {
         setErrorMessage(res?.message || `${provider} sign-in failed.`);
       }
@@ -163,7 +165,7 @@ const Login = () => {
         dispatch(setUserLoggedIn(true));
         StorageService.saveUserID(response.user._id);
         StorageService.saveToken(response.user.token);
-        navigate('/');
+        navigate(fromPath, { replace: true });
       } else {
         setIsLoading(false);
         setErrorMessage(response?.message || 'Invalid email or password.');
@@ -232,6 +234,14 @@ const Login = () => {
                 Play instruments online, create music, record, and bring your ideas to life.
               </p>
             </div>
+
+            {/* Redirect / Auth Notice Message */}
+            {location.state?.message && !errorMessage && (
+              <div className="mb-4 p-3 rounded-xl bg-primary/10 border border-primary/40 text-primary text-xs flex items-center gap-2 animate-in fade-in">
+                <AlertCircle size={15} className="text-primary shrink-0" />
+                <span className="font-medium">{location.state.message}</span>
+              </div>
+            )}
 
             {/* Error Message */}
             {errorMessage && (

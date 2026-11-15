@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import Navbar from '../components/Navbar';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setActiveKey } from '../redux/reducers/generalSlice';
 import pianoSound from '../constants/Audio/piano';
 import guitarSound from '../constants/Audio/guitar';
 import drumSound from '../constants/Audio/drum';
 import FileUploadComponent from '../components/FileUploadComponent';
+import StorageService from '../services/StorageService';
 import { demoSongs } from '../constants/demoSongs';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
@@ -45,6 +46,21 @@ const Studio = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { instrument } = useParams();
+
+  const user = useSelector((state) => state.user.user);
+  const userLoggedIn = useSelector((state) => state.general.userLoggedIn);
+
+  // Strictly prevent unauthenticated access to the studio
+  useEffect(() => {
+    const token = StorageService.gettoken();
+    const userId = StorageService.getUserID();
+    if (!user && !userLoggedIn && (!token || !userId)) {
+      navigate('/login', {
+        replace: true,
+        state: { message: 'Please sign in to access the Music Studio.' }
+      });
+    }
+  }, [user, userLoggedIn, navigate]);
 
   // Instrument selection
   const [selectedInstrument, setSelectedInstrument] = useState('piano');
