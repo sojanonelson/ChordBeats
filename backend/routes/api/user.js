@@ -80,6 +80,99 @@ router.post("/login", async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.post("/google-login", async (req, res) => {
+  try {
+    const { name, email, profileImage } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required for Google login" });
+    }
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = new User({
+        name: name || email.split("@")[0],
+        email,
+        profileImage: profileImage || "",
+      });
+      await user.save();
+    } else if (profileImage && !user.profileImage) {
+      user.profileImage = profileImage;
+      await user.save();
+    }
+
+    const token = jwt.sign(
+      { userId: user._id }, 
+      process.env.JWT_SECRET || 'chordbeat_secret_key', 
+      { expiresIn: "7d" }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Google login successful",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        profileImage: user.profileImage,
+        token: token,
+        created: user.created,
+      },
+    });
+  } catch (err) {
+    console.error("Google login error:", err);
+    res.status(500).json({ message: "Google authentication failed", error: err.message });
+  }
+});
+
+router.post("/github-login", async (req, res) => {
+  try {
+    const { name, email, profileImage } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required for GitHub login" });
+    }
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = new User({
+        name: name || email.split("@")[0],
+        email,
+        profileImage: profileImage || "",
+      });
+      await user.save();
+    } else if (profileImage && !user.profileImage) {
+      user.profileImage = profileImage;
+      await user.save();
+    }
+
+    const token = jwt.sign(
+      { userId: user._id }, 
+      process.env.JWT_SECRET || 'chordbeat_secret_key', 
+      { expiresIn: "7d" }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "GitHub login successful",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        profileImage: user.profileImage,
+        token: token,
+        created: user.created,
+      },
+    });
+  } catch (err) {
+    console.error("GitHub login error:", err);
+    res.status(500).json({ message: "GitHub authentication failed", error: err.message });
   }
 });
 
